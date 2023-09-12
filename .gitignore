@@ -1,6 +1,17 @@
-*
+# Ignore everything by default
+/*
 
+# Allow .gitignore and .zshrc files
 !.gitignore
+!.zshrc
+
+# Allow the .config directory and its contents
+!.config/
+
+# Allow specific files and subdirectories within .config
+.config/*
 !.config/nvim/
+!.config/nvim/*
 !.config/wezterm/
-!.zshrc/
+!.config/wezterm/*
+
