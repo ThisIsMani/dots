@@ -59,7 +59,7 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_wid
   return {
     { Background = { Color = edge_background } },
     { Foreground = { Color = edge_foreground } },
-    { Text = (tab.is_active or hover) and "" or " " },
+    { Text = (tab.is_active or hover) and " " or "  " },
     { Background = { Color = background } },
     { Foreground = { Color = foreground } },
     { Text = " " .. title .. " " },

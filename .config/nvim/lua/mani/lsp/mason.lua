@@ -14,6 +14,7 @@ local servers = {
   "rescriptls",
   "clangd",
   "cssls",
+  "perlnavigator",
 }
 
 local settings = {
