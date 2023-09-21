@@ -54,7 +54,7 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_wid
 
   local title = tab_title(tab)
 
-  title = wezterm.truncate_right(title, max_width - 4)
+  title = wezterm.truncate_right(title, max_width - 5)
 
   return {
     { Background = { Color = edge_background } },

@@ -70,3 +70,9 @@ keymap("x", "<A-k>", ":move '<-2<CR>gv-gv", opts)
 --Command Mode
 keymap("c", "<C-j>", 'pumvisible() ? "\\<C-n>" : "\\<C-j>"', { expr = true, noremap = true, silent = true })
 keymap("c", "<C-k>", 'pumvisible() ? "\\<C-p>" : "\\<C-k>"', { expr = true, noremap = true, silent = true })
+
+
+keymap("x", "il", "g_o^", opts)
+keymap("o", "il", "<cmd>normal vil<cr>", opts)
+keymap("x", "al", "V", opts)
+keymap("o", "al", "<cmd>normal val<cr>", opts)
