@@ -75,16 +75,19 @@ wezterm.on("user-var-changed", function(window, pane, name, value)
     local incremental = value:find("+")
     local number_value = tonumber(value)
     if incremental ~= nil then
+      window:perform_action(wezterm.action.SetPaneZoomState(true), pane)
       while number_value > 0 do
         window:perform_action(wezterm.action.IncreaseFontSize, pane)
         number_value = number_value - 1
       end
       overrides.enable_tab_bar = false
     elseif number_value < 0 then
+      window:perform_action(wezterm.action.SetPaneZoomState(false), pane)
       window:perform_action(wezterm.action.ResetFontSize, pane)
       overrides.font_size = nil
       overrides.enable_tab_bar = true
     else
+      window:perform_action(wezterm.action.SetPaneZoomState(true), pane)
       overrides.font_size = number_value
       overrides.enable_tab_bar = false
     end

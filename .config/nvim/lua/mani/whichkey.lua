@@ -57,7 +57,7 @@ local setup = {
     v = { "j", "k" },
   },
 }
-local opts = {
+local lopts = {
   mode = "n",     -- NORMAL mode
   prefix = "<leader>",
   buffer = nil,   -- Global mappings. Specify a buffer number for buffer local mappings
@@ -79,7 +79,7 @@ local vmappings = {
   ["/"] = { "<Plug>(comment_toggle_linewise_visual)", "Comment toggle" },
 }
 
-local mappings = {
+local lmappings = {
   ["a"] = { "<cmd>Alpha<cr>", "Alpha" },
   ["w"] = { "<cmd>w!<CR>", "Save" },
   ["q"] = { "<cmd>lua require('mani.functions').smart_quit()<CR>", "Quit" },
@@ -88,6 +88,7 @@ local mappings = {
   ["f"] = { "<cmd>lua require('mani.functions').find_project_files()<CR>", "Find File" },
   ["F"] = { "<cmd>Telescope live_grep<cr>", "Find files" },
   ["h"] = { "<cmd>nohlsearch<CR>", "No Highlight" },
+  ["r"] = { "<cmd>source ~/.config/nvim/init.lua<CR>", "Reload Config" },
   b = {
     name = "Buffers",
     j = { "<cmd>BufferLinePick<cr>", "Jump" },
@@ -176,22 +177,18 @@ local mappings = {
     h = { "<cmd>ToggleTerm size=10 direction=horizontal<cr>", "Horizontal" },
     v = { "<cmd>ToggleTerm size=80 direction=vertical<cr>", "Vertical" },
   },
-  j = {
-    name = "Jump",
-    f = { "<cmd>lua require('mani.functions').hop_functions.find_next()<CR>", "Jump to Char After" },
-    F = { "<cmd>lua require('mani.functions').hop_functions.find_prev()<CR>", "Jump to Char Before" },
-    t = { "<cmd>lua require('mani.functions').hop_functions.goto_next()<CR>", "Goto to Char After" },
-    T = { "<cmd>lua require('mani.functions').hop_functions.goto_prev()<CR>", "Goto to Char Before" },
-    w = { "<cmd>HopWordAC<CR>", "Jump to Word After" },
-    W = { "<cmd>HopWordBC<CR>", "Jump to Word Before" },
-    a = { "<cmd>HopWord<CR>", "Jump to Word" },
-    v = { "<cmd>HopVertical<CR>", "Jump Vertical" },
-    l = { "<cmd>HopLineStart<CR>", "Jump to Line" },
-    j = { "<cmd>HopPattern<CR>", "Jump to Pattern" },
-  },
   z = { "<cmd>ZenMode<cr>", "Zen Mode" }
 }
 
 which_key.setup(setup)
-which_key.register(mappings, opts)
+which_key.register(lmappings, lopts)
 which_key.register(vmappings, vopts)
+
+which_key.register({ s = { "<cmd>lua require('flash').jump()<cr>", "Flash" } },
+  { mode = { "n", "x", "o" } })
+which_key.register({ S = { "<cmd>lua require('flash').treesitter()<cr>", "Flash Treesitter" } },
+  { mode = { "n", "x", "o" } })
+which_key.register({ r = { "<cmd>lua require('flash').remote()<cr>", "Remote Flash" } },
+  { mode = "o" })
+which_key.register({ R = { "<cmd>lua require('flash').treesitter_search()<cr>", "Treesitter Search" } },
+  { mode = { "x", "o" } })

@@ -52,7 +52,6 @@ lazy.setup({
   "lewis6991/gitsigns.nvim",
   "lewis6991/impatient.nvim",
   "akinsho/toggleterm.nvim",
-  "phaazon/hop.nvim",
   "windwp/nvim-autopairs",
   { "catppuccin/nvim",  name = "catppuccin" },
   "ellisonleao/gruvbox.nvim",
@@ -65,6 +64,7 @@ lazy.setup({
   -- use({ "tpope/vim-fugitive" })
   "sindrets/diffview.nvim",
   "folke/zen-mode.nvim",
+  "folke/flash.nvim",
 
   --Treesitter
   "nvim-treesitter/nvim-treesitter",
