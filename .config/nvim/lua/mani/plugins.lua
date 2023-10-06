@@ -104,6 +104,6 @@ lazy.setup({
   "jcdickinson/codeium.nvim",
 
   --ColorSchemes
-  "thisismani/onedark.nvim",
+  "navarasu/onedark.nvim",
   "vimpostor/vim-lumen",
 })
