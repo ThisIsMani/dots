@@ -65,6 +65,8 @@ vim.opt.whichwrap:append "<,>,[,],h,l"
 -- vim.g.loaded_netrw = 1
 -- vim.g.loaded_netrwPlugin = 1
 --
+-- vim.g.loaded_netrw = 1
+-- vim.g.loaded_netrwPlugin = 1
 if vim.g.neovide then
   vim.opt.guifont = "JetBrainsMono Nerd Font Mono:h15"
   vim.g.neovide_fullscreen = true

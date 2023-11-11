@@ -1,5 +1,3 @@
-local onedark = require("onedark")
-
 local function get_theme_overrides(style)
   local palette = require("onedark.palette")[style]
   if type(palette) == "nil" then
@@ -69,27 +67,35 @@ local function get_theme_overrides(style)
   return M
 end
 
-local augroup_id = vim.api.nvim_create_augroup("OnedarkStyle", {})
 
-vim.api.nvim_clear_autocmds({ group = augroup_id })
-vim.api.nvim_create_autocmd("ColorSchemePre", {
-  group = augroup_id,
-  desc = "Apply theme overrides before colorscheme change",
-  callback = function()
-    local overrides = get_theme_overrides(vim.o.background)
-    if type(overrides) == "nil" then
-      return
-    end
-    onedark.set_options("highlights", overrides.highlights)
-    onedark.set_options("colors", overrides.colors)
-  end,
-})
+local N = {}
+function N.setup()
+  local onedark = require("onedark")
 
-onedark.setup({
-  style = "dark",
-  toggle_style_list = { "dark", "light" },
-  highlights = get_theme_overrides(vim.o.background).highlights,
-  colors = get_theme_overrides(vim.o.background).colors,
-})
+  local augroup_id = vim.api.nvim_create_augroup("OnedarkStyle", {})
 
-onedark.load()
+  vim.api.nvim_clear_autocmds({ group = augroup_id })
+  vim.api.nvim_create_autocmd("ColorSchemePre", {
+    group = augroup_id,
+    desc = "Apply theme overrides before colorscheme change",
+    callback = function()
+      local overrides = get_theme_overrides(vim.o.background)
+      if type(overrides) == "nil" then
+        return
+      end
+      onedark.set_options("highlights", overrides.highlights)
+      onedark.set_options("colors", overrides.colors)
+    end,
+  })
+
+  onedark.setup({
+    style = "dark",
+    toggle_style_list = { "dark", "light" },
+    highlights = get_theme_overrides(vim.o.background).highlights,
+    colors = get_theme_overrides(vim.o.background).colors,
+  })
+
+  onedark.load()
+end
+
+return N

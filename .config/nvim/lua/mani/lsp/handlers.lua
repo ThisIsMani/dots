@@ -63,7 +63,7 @@ function M.setup()
         { name = "DiagnosticSignInfo",  text = icons.diagnostics.Info },
       },
     },
-    update_in_insert = false,
+    update_in_insert = true,
     underline = true,
     severity_sort = true,
     float = {

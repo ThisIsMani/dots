@@ -1,14 +1,14 @@
-local mason_status_ok, mason_null_ls = pcall(require, "mason-null-ls")
-if not mason_status_ok then
-	return
+local M = {}
+
+function M.setup()
+  local mason_null_ls = require("mason-null-ls")
+
+  local null_ls = require("null-ls")
+
+  local default_opts = require("mani.lsp.handlers").get_common_opts()
+  null_ls.setup(default_opts)
+
+  mason_null_ls.setup({})
 end
 
-local status_ok, null_ls = pcall(require, "null-ls")
-if not status_ok then
-	return
-end
-
-local default_opts = require("mani.lsp.handlers").get_common_opts()
-null_ls.setup(default_opts)
-
-mason_null_ls.setup({})
+return M

@@ -1,11 +1,11 @@
 local M = {}
 
-function M.get_supported_servers(filter)
-  local _, supported_servers = pcall(function()
-    return require("mason-lspconfig").get_available_servers(filter)
-  end)
-  return supported_servers or {}
-end
+-- function M.get_supported_servers(filter)
+--   local _, supported_servers = pcall(function()
+--     return require("mason-lspconfig").get_available_servers(filter)
+--   end)
+--   return supported_servers or {}
+-- end
 
 function M.setup_codelens_refresh(client, bufnr)
   local status_ok, codelens_supported = pcall(function()
@@ -64,6 +64,22 @@ function M.setup_document_highlight(client, bufnr)
     buffer = bufnr,
     callback = vim.lsp.buf.clear_references,
   })
+end
+
+function M.get_servers()
+  local servers = {
+    "lua_ls",
+    "rust_analyzer",
+    "rescriptls",
+    "clangd",
+    "cssls",
+    "perlnavigator",
+    "tsserver",
+    "pyright",
+    "jdtls"
+  }
+
+  return servers
 end
 
 return M

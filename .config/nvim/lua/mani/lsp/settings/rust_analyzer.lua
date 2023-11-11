@@ -43,6 +43,7 @@ return {
           command = "check",
           extraArgs = { "--target-dir", "Users/mani.dchandra/.cache/shared_rust_target/analyzer" }
         },
+        cancelFlycheck = "C-c"
       },
     },
   },

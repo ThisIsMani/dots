@@ -20,6 +20,7 @@ end
 local colors = scheme_for_appearance(get_appearance())
 
 config.font = wezterm.font("JetBrainsMono Nerd Font Mono")
+config.harfbuzz_features = { "calt", "cv02", "cv03", "cv04", "cv05", "cv09", "cv10", "cv11", "cv12", "cv14", "cv16", "cv18", "cv19", "cv20", "zero" }
 config.font_size = 15.0
 config.colors = colors
 config.use_fancy_tab_bar = false
