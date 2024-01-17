@@ -20,7 +20,8 @@ end
 local colors = scheme_for_appearance(get_appearance())
 
 config.font = wezterm.font("JetBrainsMono Nerd Font Mono")
-config.harfbuzz_features = { "calt", "cv02", "cv03", "cv04", "cv05", "cv09", "cv10", "cv11", "cv12", "cv14", "cv16", "cv18", "cv19", "cv20", "zero" }
+config.harfbuzz_features = { "calt", "cv02", "cv03", "cv04", "cv05", "cv09", "cv10", "cv11", "cv12", "cv14", "cv16",
+  "cv18", "cv19", "cv20", "zero" }
 config.font_size = 15.0
 config.colors = colors
 config.use_fancy_tab_bar = false
@@ -78,18 +79,14 @@ wezterm.on("user-var-changed", function(window, pane, name, value)
     if incremental ~= nil then
       window:perform_action(wezterm.action.SetPaneZoomState(true), pane)
       while number_value > 0 do
-        window:perform_action(wezterm.action.IncreaseFontSize, pane)
         number_value = number_value - 1
       end
       overrides.enable_tab_bar = false
     elseif number_value < 0 then
       window:perform_action(wezterm.action.SetPaneZoomState(false), pane)
-      window:perform_action(wezterm.action.ResetFontSize, pane)
-      overrides.font_size = nil
       overrides.enable_tab_bar = true
     else
       window:perform_action(wezterm.action.SetPaneZoomState(true), pane)
-      overrides.font_size = number_value
       overrides.enable_tab_bar = false
     end
   end

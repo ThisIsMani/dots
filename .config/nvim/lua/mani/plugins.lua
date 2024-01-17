@@ -200,6 +200,12 @@ lazy.setup({
     end,
     lazy = false
   },
+  {
+    "tpope/vim-fugitive"
+  },
+  {
+    "tpope/vim-rhubarb"
+  },
 
   --Treesitter
   {
@@ -266,7 +272,7 @@ lazy.setup({
   },
   {
     "j-hui/fidget.nvim",
-    tag = "legacy",
+    -- tag = "legacy",
     event = "LspAttach",
     config = function()
       require("fidget").setup()
@@ -312,8 +318,13 @@ lazy.setup({
 
   --Rust
   {
-    "simrat39/rust-tools.nvim",
-    lazy = true
+    "mrcjkb/rustaceanvim",
+    lazy = true,
+    ft = { "rust" },
+    opts = require("mani.lsp.settings.rustaceanvim"),
+    config = function(_, opts)
+      vim.g.rustaceanvim = vim.tbl_deep_extend("force", {}, opts or {})
+    end
   },
 
   --CMP
@@ -329,6 +340,8 @@ lazy.setup({
       "cmp-buffer",
       "cmp-path",
       "cmp-cmdline",
+      "copilot.lua",
+      -- "copilot-cmp",
     },
     lazy = true,
   },
@@ -361,6 +374,20 @@ lazy.setup({
     "rafamadriz/friendly-snippets",
     lazy = true
   },
+  {
+    "zbirenbaum/copilot.lua",
+    config = function()
+      require("mani.copilot").setup()
+    end,
+    lazy = true
+  },
+  -- {
+  --   "zbirenbaum/copilot-cmp",
+  --   config = function()
+  --     require("copilot_cmp").setup()
+  --   end,
+  --   lazy = true
+  -- },
   -- "zbirenbaum/copilot.lua",
   -- "zbirenbaum/copilot-cmp",
   -- "jcdickinson/codeium.nvim",
