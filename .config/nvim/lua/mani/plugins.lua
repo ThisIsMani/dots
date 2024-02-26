@@ -61,7 +61,6 @@ lazy.setup({
       require("mani.comment").setup()
     end,
     keys = { { "gc", mode = { "n", "v" } }, { "gb", mode = { "n", "v" } } },
-    event = "User FileOpened",
   },
   {
     "akinsho/bufferline.nvim",
@@ -73,11 +72,10 @@ lazy.setup({
   },
   {
     "SmiteshP/nvim-navic",
-    lazy = true,
     config = function()
       require("mani.breadcrumbs").setup()
     end,
-    event = "User FileOpened",
+    lazy = true,
   },
   {
     "lukas-reineke/indent-blankline.nvim",
@@ -103,22 +101,22 @@ lazy.setup({
     end,
     event = "User FileOpened",
   },
-  {
-    "akinsho/toggleterm.nvim",
-    lazy = true,
-    config = function()
-      require("mani.toggleterm").setup()
-    end,
-    keys = { { "<C-\\>", mode = { "n" } } },
-    cmd = {
-      "ToggleTerm",
-      "TermExec",
-      "ToggleTermToggleAll",
-      "ToggleTermSendCurrentLine",
-      "ToggleTermSendVisualLines",
-      "ToggleTermSendVisualSelection",
-    },
-  },
+  -- {
+  --   "akinsho/toggleterm.nvim",
+  --   lazy = true,
+  --   config = function()
+  --     require("mani.toggleterm").setup()
+  --   end,
+  --   keys = { { "<C-\\>", mode = { "n" } } },
+  --   cmd = {
+  --     "ToggleTerm",
+  --     "TermExec",
+  --     "ToggleTermToggleAll",
+  --     "ToggleTermSendCurrentLine",
+  --     "ToggleTermSendVisualLines",
+  --     "ToggleTermSendVisualSelection",
+  --   },
+  -- },
   {
     "windwp/nvim-autopairs",
     lazy = true,
@@ -198,13 +196,17 @@ lazy.setup({
         }
       })
     end,
-    lazy = false
+    event = 'User FileOpened'
   },
   {
-    "tpope/vim-fugitive"
+    "tpope/vim-fugitive",
+    lazy = true,
+    cmd = { "Git" }
   },
   {
-    "tpope/vim-rhubarb"
+    "tpope/vim-rhubarb",
+    lazy = true,
+    cmd = { "GBrowse" }
   },
 
   --Treesitter
@@ -240,36 +242,35 @@ lazy.setup({
     "williamboman/mason.nvim",
     config = function()
       require("mani.lsp.mason").setup()
-      require("mani.lsp.handlers").setup()
     end,
     cmd = { "Mason", "MasonInstall", "MasonUninstall", "MasonUninstallAll", "MasonLog" },
-    event = "User FileOpened",
     lazy = true,
   },
   {
     "williamboman/mason-lspconfig.nvim",
-    cmd = { "LspInstall", "LspUninstall" },
+    cmd = { "LspInstall", "LspUninstall", "LspInfo" },
     config = function()
       require("mani.lsp.mason-lspconfig").setup()
     end,
+    dependencies = { "mason.nvim" },
     lazy = true,
-    event = "User FileOpened",
   },
   {
     "neovim/nvim-lspconfig",
-    lazy = true,
     config = function()
       require("mani.lsp.lspconfig").setup()
+      require("mani.lsp.handlers").setup()
     end,
-    dependencies = { --[[ "nlsp-settings.nvim",  ]] "mason.nvim", "mason-lspconfig.nvim" },
+    dependencies = { "williamboman/mason-lspconfig.nvim", "nvim-navic" },
+    event = { "BufReadPre", "BufNewFile" },
   },
-  {
-    "jose-elias-alvarez/null-ls.nvim",
-    config = function()
-      require("mani.lsp.null-ls").setup()
-    end,
-    lazy = true
-  },
+  -- {
+  --   "jose-elias-alvarez/null-ls.nvim",
+  --   config = function()
+  --     require("mani.lsp.null-ls").setup()
+  --   end,
+  --   lazy = false
+  -- },
   {
     "j-hui/fidget.nvim",
     -- tag = "legacy",
@@ -303,28 +304,38 @@ lazy.setup({
     config = function()
       require("mani.telescope").setup()
     end,
-    dependencies = "dressing.nvim",
-    lazy = false
+    dependencies = {
+      "dressing.nvim"
+    },
+    lazy = true,
   },
-  -- "ahmedkhalf/project.nvim",
   {
     "stevearc/dressing.nvim",
     config = function()
       require("mani.dressing").setup()
     end,
-    event = "LspAttach",
+    lazy = true,
+    event = 'User FileOpened'
+  },
+  {
+    "ibhagwan/fzf-lua",
+    dependencies = { "nvim-web-devicons" },
+    cmd = { "FzfLua" },
+    config = function()
+      require("mani.fzf-lua").setup()
+    end,
     lazy = true,
   },
 
   --Rust
   {
     "mrcjkb/rustaceanvim",
-    lazy = true,
     ft = { "rust" },
     opts = require("mani.lsp.settings.rustaceanvim"),
     config = function(_, opts)
       vim.g.rustaceanvim = vim.tbl_deep_extend("force", {}, opts or {})
-    end
+    end,
+    lazy = true,
   },
 
   --CMP
@@ -399,11 +410,38 @@ lazy.setup({
     config = function()
       require("mani.colorscheme").setup()
     end,
-    lazy = false,
+    dependencies = { 'cormacrelf/dark-notify' },
+  },
+  -- {
+  --   "ThePrimeagen/harpoon",
+  --   branch = "harpoon2",
+  --   dependencies = { "nvim-lua/plenary.nvim" },
+  --   config = function()
+  --     local harpoon = require("harpoon")
+  --     harpoon:setup()
+  --   end,
+  --   lazy = false,
+  -- },
+  {
+    "chentoast/marks.nvim",
+    config = function()
+      require("marks").setup()
+    end,
+    event = "User FileOpened",
+    lazy = true
   },
   {
-    "vimpostor/vim-lumen",
-    lazy = false,
+    'topaxi/gh-actions.nvim',
+    cmd = 'GhActions',
+    keys = {
+      { '<leader>gh', '<cmd>GhActions<cr>', desc = 'Open Github Actions' },
+    },
+    build = 'make',
+    dependencies = { 'nvim-lua/plenary.nvim', 'MunifTanjim/nui.nvim' },
+    opts = {},
+    config = function(_, opts)
+      require('gh-actions').setup(opts)
+    end,
   },
 }, {
   ui = { border = "rounded" },

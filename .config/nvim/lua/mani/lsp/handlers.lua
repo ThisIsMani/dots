@@ -11,11 +11,11 @@ local float = {
 function M.common_on_attach(client, bufnr)
   local opts = { noremap = true, silent = true }
   local keymap = vim.api.nvim_buf_set_keymap
-  keymap(bufnr, "n", "gD", "<cmd>Telescope lsp_type_definitions<CR>", opts)
-  keymap(bufnr, "n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts)
+  keymap(bufnr, "n", "gD", "<cmd>FzfLua lsp_typedefs<CR>", opts)
+  keymap(bufnr, "n", "gd", "<cmd>FzfLua lsp_definitions<CR>", opts)
   keymap(bufnr, "n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
-  keymap(bufnr, "n", "gI", "<cmd>Telescope lsp_implementations<CR>", opts)
-  keymap(bufnr, "n", "gr", "<cmd>Telescope lsp_references<CR>", opts)
+  keymap(bufnr, "n", "gI", "<cmd>FzfLua lsp_implementations<CR>", opts)
+  keymap(bufnr, "n", "gr", "<cmd>FzfLua lsp_references<CR>", opts)
   keymap(bufnr, "n", "gl", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
   local lu = require "mani.lsp.functions"
   lu.setup_document_highlight(client, bufnr)

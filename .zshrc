@@ -1,7 +1,5 @@
-# # Fig pre block. Keep at the top of this file.
-# [[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.pre.zsh"
-# zmodload zsh/zprof
-# Fig pre block. Keep at the top of this file.
+# CodeWhisperer pre block. Keep at the top of this file.
+[[ -f "${HOME}/Library/Application Support/codewhisperer/shell/zshrc.pre.zsh" ]] && builtin source "${HOME}/Library/Application Support/codewhisperer/shell/zshrc.pre.zsh"
 # # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -113,7 +111,6 @@ export PATH="/usr/local/Cellar/openjdk/20.0.1/bin:$HOME/.cabal/bin:$HOME/.ghcup/
 
 [ -f "/Users/mani.dchandra/.ghcup/env" ] && source "/Users/mani.dchandra/.ghcup/env" # ghcup-env
 PQ_LIB_DIR="$(brew --prefix libpq)/lib"
-export PATH="$HOME/.local/bin:$HOME/.fig/bin:$PATH"
 
 # # eval $(thefuck --alias)
 # eval "$(starship init zsh)"
@@ -121,13 +118,22 @@ eval "$(zoxide init zsh)"
 eval "$(fnm env --use-on-cd)"
 # zprof
 
-# Fig post block. Keep at the bottom of this file.
-# [[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
-
-# bun completions
+# # bun completions
 [ -s "/Users/mani.dchandra/.bun/_bun" ] && source "/Users/mani.dchandra/.bun/_bun"
+
+nvim() {
+  if [[ $@ == "." ]]; then
+    command nvim $(fzf || echo ".")
+  else
+    command nvim "$@"
+  fi
+}
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 export EDITOR=nvim
+export ESCDELAY=0
+
+# CodeWhisperer post block. Keep at the bottom of this file.
+[[ -f "${HOME}/Library/Application Support/codewhisperer/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/codewhisperer/shell/zshrc.post.zsh"

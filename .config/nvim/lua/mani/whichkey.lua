@@ -88,19 +88,20 @@ function M.setup()
   }
 
   local lmappings = {
-    ["a"] = { "<cmd>Alpha<cr>", "Alpha" },
     ["w"] = { "<cmd>w!<CR>", "Save" },
     ["q"] = { "<cmd>lua require('mani.functions').smart_quit()<CR>", "Quit" },
     ["e"] = { "<cmd>NvimTreeToggle<cr>", "Explorer" },
     ["c"] = { "<cmd>lua require('mani.functions').buf_kill 'bd'<CR>", "Close Buffer" },
-    ["f"] = { "<cmd>lua require('mani.functions').find_project_files()<CR>", "Find File" },
-    ["F"] = { "<cmd>Telescope live_grep<cr>", "Find files" },
+    ["f"] = { "<cmd>FzfLua files<CR>", "Find file" },
+    ["F"] = { "<cmd>FzfLua grep_project<cr>", "Find text" },
+    ["R"] = { "<cmd>FzfLua live_grep<cr>", "Find regex" },
     ["h"] = { "<cmd>nohlsearch<CR>", "No Highlight" },
     ["r"] = { "<cmd>source ~/.config/nvim/init.lua<CR>", "Reload Config" },
+    ["m"] = { "<cmd>FzfLua marks<CR>", "List marks" },
     b = {
       name = "Buffers",
-      j = { "<cmd>BufferLinePick<cr>", "Jump" },
-      f = { "<cmd>Telescope buffers<cr>", "Find" },
+      -- j = { "<cmd>BufferLinePick<cr>", "Jump" },
+      j = { "<cmd>FzfLua buffers<cr>", "Find" },
       c = { "<cmd>BufferLinePickClose<cr>", "Pick which buffer to close" },
       h = { "<cmd>BufferLineCloseLeft<cr>", "Close all to the left" },
       l = { "<cmd>BufferLineCloseRight<cr>", "Close all to the right" },
@@ -108,17 +109,9 @@ function M.setup()
       L = { "<cmd>BufferLineSortByExtension<cr>", "Sort by extension" },
       C = { "<cmd>%bdelete<cr>", "Close all buffers" },
     },
-    p = {
-      name = "Packer",
-      c = { "<cmd>PackerCompile<cr>", "Compile" },
-      i = { "<cmd>PackerInstall<cr>", "Install" },
-      s = { "<cmd>PackerSync<cr>", "Sync" },
-      S = { "<cmd>PackerStatus<cr>", "Status" },
-      u = { "<cmd>PackerUpdate<cr>", "Update" },
-    },
     g = {
       name = "Git",
-      g = { "<cmd>DiffviewOpen<CR>", "Git Screen" },
+      g = { "<cmd>tab Git<CR>", "Git Screen" },
       j = { "<cmd>lua require 'gitsigns'.next_hunk({navigation_message = false})<cr>", "Next Hunk" },
       k = { "<cmd>lua require 'gitsigns'.prev_hunk({navigation_message = false})<cr>", "Prev Hunk" },
       l = { "<cmd>lua require 'gitsigns'.blame_line()<cr>", "Blame" },
@@ -130,19 +123,19 @@ function M.setup()
         "<cmd>lua require 'gitsigns'.undo_stage_hunk()<cr>",
         "Undo Stage Hunk",
       },
-      o = { "<cmd>Telescope git_status<cr>", "Open changed file" },
-      b = { "<cmd>Telescope git_branches<cr>", "Checkout branch" },
-      c = { "<cmd>Telescope git_commits<cr>", "Checkout commit" },
-      C = { "<cmd>Telescope git_bcommits<cr>", "Checkout commit(for current file)" },
+      o = { "<cmd>FzfLua git_status<cr>", "Git status" },
+      b = { "<cmd>FzfLua git_branches<cr>", "Checkout branch" },
+      c = { "<cmd>FzfLua git_commits<cr>", "Checkout commit" },
+      C = { "<cmd>FzfLua git_bcommits<cr>", "Checkout commit(for current file)" },
       d = { "<cmd>Gitsigns diffthis HEAD<cr>", "Git Diff" },
       w = { "<cmd>lua require('telescope').extensions.git_worktree.git_worktrees()<cr>", "Git Worktrees" },
       n = { "<cmd>lua require 'telescope'.extensions.git_worktree.create_git_worktree()<cr>", "Create Worktree" }
     },
     l = {
       name = "LSP",
-      a = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action" },
-      d = { "<cmd>Telescope diagnostics bufnr=0<cr>", "Buffer Diagnostics" },
-      w = { "<cmd>Telescope diagnostics<cr>", "Diagnostics" },
+      a = { "<cmd>FzfLua lsp_code_actions<cr>", "Code Action" },
+      d = { "<cmd>FzfLua diagnostics_document<cr>", "Buffer Diagnostics" },
+      w = { "<cmd>FzfLua diagnostics_workspace<cr>", "Diagnostics" },
       f = { "<cmd>lua vim.lsp.buf.format{async=true}<cr>", "Format" },
       i = { "<cmd>LspInfo<cr>", "Info" },
       I = { "<cmd>Mason<cr>", "Mason Info" },
@@ -153,33 +146,26 @@ function M.setup()
       q = { vim.diagnostic.setloclist, "Quickfix" },
       r = { vim.lsp.buf.rename, "Rename" },
       R = { "<cmd>LspRestart<cr>", "Lsp Restart" },
-      s = { "<cmd>Telescope lsp_document_symbols<cr>", "Document Symbols" },
-      S = { "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>", "Workspace Symbols" },
-      e = { "<cmd>Telescope quickfix<cr>", "Telescope Quickfix" },
+      s = { "<cmd>FzfLua lsp_document_symbols<cr>", "Document Symbols" },
+      S = { "<cmd>FzfLua lsp_live_workspace_symbols<cr>", "Workspace Symbols" },
+      e = { "<cmd>FzfLua quickfix<cr>", "Quickfix list" },
       c = {
         name = "Calls",
-        o = { "<cmd>Telescope lsp_outgoing_calls<cr>", "Outgoing calls" },
-        i = { "<cmd>Telescope lsp_incoming_calls<cr>", "Incoming calls" },
+        o = { "<cmd>FzfLua lsp_outgoing_calls<cr>", "Outgoing calls" },
+        i = { "<cmd>FzfLua lsp_incoming_calls<cr>", "Incoming calls" },
       }
     },
     s = {
       name = "Search",
-      b = { "<cmd>Telescope git_branches<cr>", "Checkout branch" },
-      c = { "<cmd>Telescope colorscheme<cr>", "Colorscheme" },
-      f = { "<cmd>Telescope find_files<cr>", "Find File" },
-      h = { "<cmd>Telescope help_tags<cr>", "Find Help" },
-      H = { "<cmd>Telescope highlights<cr>", "Find highlight groups" },
-      M = { "<cmd>Telescope man_pages<cr>", "Man Pages" },
-      r = { "<cmd>Telescope oldfiles<cr>", "Open Recent File" },
-      R = { "<cmd>Telescope registers<cr>", "Registers" },
-      t = { "<cmd>Telescope live_grep<cr>", "Text" },
-      k = { "<cmd>Telescope keymaps<cr>", "Keymaps" },
-      C = { "<cmd>Telescope commands<cr>", "Commands" },
-      p = { "<cmd>lua require('telescope').extensions.projects.projects()<cr>", "Projects" },
-    },
-    T = {
-      name = "Treesitter",
-      i = { ":TSConfigInfo<cr>", "Info" },
+      b = { "<cmd>FzfLua git_branches<cr>", "Checkout branch" },
+      c = { "<cmd>FzfLua colorschemes<cr>", "Colorscheme" },
+      h = { "<cmd>FzfLua help_tags<cr>", "Find Help" },
+      H = { "<cmd>FzfLua highlights<cr>", "Find highlight groups" },
+      M = { "<cmd>FzfLua man_pages<cr>", "Man Pages" },
+      r = { "<cmd>FzfLua oldfiles<cr>", "Open Recent File" },
+      R = { "<cmd>FzfLua registers<cr>", "Registers" },
+      k = { "<cmd>FzfLua keymaps<cr>", "Keymaps" },
+      C = { "<cmd>FzfLua commands<cr>", "Commands" },
     },
     t = {
       name = "Terminal",
@@ -201,7 +187,7 @@ function M.setup()
   }
 
   local gmappings = {
-    j = { "<cmd>Telescope jumplist<cr>", "Open Jump List" }
+    j = { "<cmd>FzfLua jumps<cr>", "Open Jump List" }
   }
 
   which_key.register(gmappings, gopts)

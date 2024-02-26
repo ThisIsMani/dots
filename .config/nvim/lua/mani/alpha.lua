@@ -18,11 +18,11 @@ function M.setup()
   }
 
   dashboard.section.buttons.val = {
-    dashboard.button("f", "󰈞  Find file", ":Telescope find_files <CR>"),
+    dashboard.button("f", "󰈞  Find file", ":FzfLua files<CR>"),
     dashboard.button("e", "  New file", ":ene <BAR> startinsert <CR>"),
     dashboard.button("p", "  Find project", ":lua require'telescope'.extensions.projects.projects{}<CR>"),
-    dashboard.button("r", "󰄉  Recently used files", ":Telescope oldfiles <CR>"),
-    dashboard.button("F", "󰊄  Find text", ":Telescope live_grep <CR>"),
+    dashboard.button("r", "󰄉  Recently used files", ":FzfLua oldfiles <CR>"),
+    dashboard.button("F", "󰊄  Find text", ":FzfLua grep_project<CR>"),
     dashboard.button("c", "  Configuration", ":e $MYVIMRC <CR>"),
     dashboard.button("q", "󰅚  Quit Neovim", ":qa<CR>"),
   }

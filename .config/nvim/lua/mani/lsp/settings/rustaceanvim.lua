@@ -19,11 +19,7 @@ return {
         lens = {
           enable = true,
         },
-        checkOnSave = {
-          allFeatures = true,
-          command = "clippy",
-          extraArgs = { "--no-deps" },
-        },
+        checkOnSave = false,
         procMacro = {
           enable = true,
           ignored = {
