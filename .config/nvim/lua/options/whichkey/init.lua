@@ -19,3 +19,5 @@ which_key.setup({
 require("options.whichkey.visual_maps")
 
 require("options.whichkey.leader_maps")
+
+require("options.whichkey.g_maps")

@@ -1,31 +1,26 @@
-require("mani.options")
-require("mani.plugins")
--- require("mani.colorscheme")
--- require("mani.nvim-tree")
--- require("mani.completion")
--- require("mani.bufferline")
-require("mani.keymaps")
--- require("mani.whichkey")
--- require("mani.treesitter")
--- require("mani.illuminate")
--- require("mani.lsp")
--- require("mani.comment")
--- require("mani.telescope")
--- require("mani.dressing")
--- require("mani.breadcrumbs")
--- require("mani.indentlines")
--- require("mani.lualine")
--- require("mani.impatient")
--- require("mani.toggleterm")
--- require("mani.gitsigns")
--- require("mani.autopairs")
--- require("mani.focus")
--- require("mani.goto-preview")
--- require("mani.alpha")
-require("mani.projects")
--- require("mani.copilot")
--- require("mani.copilot-cmp")
--- require("mani.zen_mode")
--- require("mani.codeium")
--- require("mani.flash-nvim")
-require("mani.autocmds")
+vim.g.mapleader = " "
+-- needed for colorizer
+vim.opt.termguicolors = true
+
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.uv.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable",
+    lazypath,
+  })
+end
+
+-- Add lazy to the `runtimepath`, this allows us to `require` it.
+---@diagnostic disable-next-line: undefined-field
+vim.opt.rtp:prepend(lazypath)
+
+-- Set up lazy, and load `lua/plugins/` folder
+require("lazy").setup({ import = "plugins" }, {
+  change_detection = {
+    notify = false,
+  },
+})

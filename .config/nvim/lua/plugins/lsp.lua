@@ -7,9 +7,10 @@ return {
     "ray-x/lsp_signature.nvim",
     "stevearc/conform.nvim",
     "folke/neodev.nvim",
+    "SmiteshP/nvim-navic",
   },
   event = { "BufReadPre", "BufNewFile" },
   config = function()
-    require "options.lsp"
+    require("options.lsp")
   end,
 }

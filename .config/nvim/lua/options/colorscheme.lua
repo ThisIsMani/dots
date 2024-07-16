@@ -63,7 +63,7 @@ local function get_theme_overrides(style)
     IblIndent = { fg = "$bg1", fmt = "nocombine" },
     IblWhitespace = { fmt = "nocombine" },
     IblScope = { fg = "$grey", fmt = "nocombine" },
-    LspSignatureActiveParameter = { fg = "$fg", bg = "$bg2" }
+    LspSignatureActiveParameter = { fg = "$fg", bg = "$bg2" },
   }
   return M
 end
@@ -82,7 +82,6 @@ local function update_theme(mode)
   onedark.load()
 end
 
-
 local onedark = require("onedark")
 
 onedark.setup({
@@ -90,8 +89,8 @@ onedark.setup({
   toggle_style_list = { "dark", "light" },
 })
 
-local dark_notify = require('dark_notify')
+local dark_notify = require("dark_notify")
 dark_notify.run({
-  onchange = update_theme
+  onchange = update_theme,
 })
 dark_notify.update()

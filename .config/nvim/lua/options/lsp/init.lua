@@ -2,6 +2,8 @@ local lspconfig = require("lspconfig")
 require("options.lsp.mason")
 require("options.lsp.format")
 require("neodev").setup()
+require("fidget").setup({})
+require("options.lsp.handlers")
 
 local opts = require("options.lsp.utils").get_common_opts()
 local servers = require("mason-lspconfig").get_installed_servers()
@@ -35,3 +37,5 @@ for _, server in pairs(servers) do
 end
 
 require("lspconfig.ui.windows").default_options.border = "rounded"
+
+require("options.lsp.navic")

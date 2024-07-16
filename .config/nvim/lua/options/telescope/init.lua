@@ -76,6 +76,10 @@ require("telescope").setup({
   },
   pickers = get_pickers(actions),
   extensions = {
+    resession = {
+      prompt_title = "Find Sessions", -- telescope prompt title
+      dir = "session", -- directory where resession stores sessions
+    },
     fzf = {
       fuzzy = true, -- false will only do exact matching
       override_generic_sorter = true, -- override the generic sorter

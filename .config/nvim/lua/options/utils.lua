@@ -2,7 +2,7 @@ local M = {}
 
 function M.smart_quit()
   local bufnr = vim.api.nvim_get_current_buf()
-  local modified = vim.api.nvim_buf_get_option(bufnr, "modified")
+  local modified = vim.api.nvim_get_option_value("modified", { buf = 0 })
   if modified then
     vim.ui.input({
       prompt = "You have unsaved changes. Quit anyway? (y/n) ",
@@ -34,7 +34,7 @@ function M.buf_kill(kill_command, bufnr, force)
     local warning
     if bo[bufnr].modified then
       warning = fmt([[No write since last change for (%s)]], fnamemodify(bufname, ":t"))
-    elseif api.nvim_buf_get_option(bufnr, "buftype") == "terminal" then
+    elseif api.nvim_get_option_value("buftype", { buf = 0 }) == "terminal" then
       warning = fmt([[Terminal %s will be killed]], bufname)
     end
     if warning then
@@ -84,6 +84,19 @@ function M.buf_kill(kill_command, bufnr, force)
   -- due to options like bufhidden=wipe.
   if api.nvim_buf_is_valid(bufnr) and bo[bufnr].buflisted then
     vim.cmd(string.format("%s %d", kill_command, bufnr))
+  end
+end
+
+function M.isempty(s)
+  return s == nil or s == ""
+end
+
+function M.get_buf_option(opt)
+  local status_ok, buf_option = pcall(vim.api.nvim_get_option_value, opt, { buf = 0 })
+  if not status_ok then
+    return nil
+  else
+    return buf_option
   end
 end
 

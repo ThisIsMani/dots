@@ -1,0 +1,15 @@
+-- return {
+--   "nvim-java/nvim-java",
+--   dependencies = { "mfussenegger/nvim-jdtls" },
+--   config = function()
+--     -- require("java").setup()
+--     local config = {
+--       cmd = { vim.fn.stdpath("data") .. "/mason/bin/jdtls" },
+--       root_dir = vim.fs.dirname(vim.fs.find({ "gradlew", ".git", "mvnw" }, { upward = true })[1]),
+--       -- on_attach = require("options.lsp.utils").common_on_attach,
+--       -- capabilities = require("options.lsp.utils").common_capabilities,
+--     }
+--     require("jdtls").start_or_attach(config)
+--   end,
+--   ft = { "java" },
+-- }

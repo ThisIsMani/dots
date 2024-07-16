@@ -13,4 +13,4 @@ require("options.completion.core_completion")
 
 require("options.completion.cmdline_completion")
 
-require("options.completion.copilot")
+-- require("options.completion.copilot")

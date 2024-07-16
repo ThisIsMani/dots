@@ -1,25 +1,24 @@
 local which_key = require("which-key")
 
 local lopts = {
-  mode = "n",     -- NORMAL mode
+  mode = "n", -- NORMAL mode
   prefix = "<leader>",
-  buffer = nil,   -- Global mappings. Specify a buffer number for buffer local mappings
-  silent = true,  -- use `silent` when creating keymaps
+  buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
+  silent = true, -- use `silent` when creating keymaps
   noremap = true, -- use `noremap` when creating keymaps
-  nowait = true,  -- use `nowait` when creating keymaps
+  nowait = true, -- use `nowait` when creating keymaps
 }
 
 local lmappings = {
   ["w"] = { "<cmd>w!<CR>", "Save" },
   ["q"] = { "<cmd>lua require('options.utils').smart_quit()<CR>", "Quit" },
-  ["e"] = { "<cmd>NvimTreeToggle<cr>", "Explorer" },
+  ["e"] = { "<cmd>Oil --float<cr>", "Explorer" },
   ["c"] = { "<cmd>lua require('mani.functions').buf_kill 'bd'<CR>", "Close Buffer" },
   ["f"] = { "<cmd>Telescope find_files<CR>", "Find file" },
   ["S"] = { "<cmd>Telescope grep_string<CR>", "Find string under cursor" },
   ["F"] = { "<cmd>Telescope live_grep<cr>", "Find text" },
   -- ["R"] = { "<cmd>Telescope grep_string<cr>", "Find regex" },
   ["h"] = { "<cmd>nohlsearch<CR>", "No Highlight" },
-  ["r"] = { "<cmd>source ~/.config/nvim/init.lua<CR>", "Reload Config" },
   ["m"] = { "<cmd>Telescope marks<CR>", "List marks" },
   b = {
     name = "Buffers",
@@ -52,7 +51,7 @@ local lmappings = {
     C = { "<cmd>Telescope git_bcommits<cr>", "Checkout commit(for current file)" },
     d = { "<cmd>Gitsigns diffthis HEAD<cr>", "Git Diff" },
     w = { "<cmd>lua require('telescope').extensions.git_worktree.git_worktrees()<cr>", "Git Worktrees" },
-    n = { "<cmd>lua require 'telescope'.extensions.git_worktree.create_git_worktree()<cr>", "Create Worktree" }
+    n = { "<cmd>lua require 'telescope'.extensions.git_worktree.create_git_worktree()<cr>", "Create Worktree" },
   },
   l = {
     name = "LSP",
@@ -76,7 +75,7 @@ local lmappings = {
       name = "Calls",
       o = { "<cmd>Telescope lsp_outgoing_calls<cr>", "Outgoing calls" },
       i = { "<cmd>Telescope lsp_incoming_calls<cr>", "Incoming calls" },
-    }
+    },
   },
   s = {
     name = "Search",
@@ -92,13 +91,18 @@ local lmappings = {
     C = { "<cmd>Telescope commands<cr>", "Commands" },
     p = { "<cmd>Telescope planets<cr>", "Planets" },
   },
+  r = {
+    name = "Resession",
+    f = { "<CMD>Telescope resession<CR>", "Find Session" },
+    s = { "<CMD>lua require('resession').save()<CR>", "Save Session" },
+  },
   t = {
     name = "Terminal",
     f = { "<cmd>ToggleTerm direction=float<cr>", "Float" },
     h = { "<cmd>ToggleTerm size=10 direction=horizontal<cr>", "Horizontal" },
     v = { "<cmd>ToggleTerm size=80 direction=vertical<cr>", "Vertical" },
   },
-  z = { "<cmd>ZenMode<cr>", "Zen Mode" }
+  z = { "<cmd>ZenMode<cr>", "Zen Mode" },
 }
 
 which_key.register(lmappings, lopts)
