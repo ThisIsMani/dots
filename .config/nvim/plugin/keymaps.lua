@@ -32,3 +32,8 @@ set({ "n", "x", "o" }, "s", "<cmd>lua require('flash').jump()<cr>")
 set({ "n", "x", "o" }, "S", "<cmd>lua require('flash').treesitter()<cr>")
 set("o", "r", "<cmd>lua require('flash').remote()<cr>")
 set({ "x", "o" }, "R", "<cmd>lua require('flash').treesitter_search()<cr>")
+
+set("x", "il", "^og_")
+set("o", "il", "<CMD>normal vil<CR>")
+set("x", "al", "V")
+set("o", "al", "<CMD>normal val<CR>")

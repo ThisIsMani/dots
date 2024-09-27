@@ -39,3 +39,5 @@ end
 require("lspconfig.ui.windows").default_options.border = "rounded"
 
 require("options.lsp.navic")
+
+vim.lsp.log.set_level(vim.log.levels.OFF)

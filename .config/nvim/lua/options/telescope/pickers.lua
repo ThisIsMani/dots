@@ -1,4 +1,4 @@
-return function (actions)
+return function(actions)
   return {
     find_files = {
       theme = "dropdown",

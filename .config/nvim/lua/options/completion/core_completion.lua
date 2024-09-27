@@ -1,31 +1,32 @@
 local cmp = require("cmp")
-require("luasnip").setup({})
+-- require("luasnip").setup({})
+--
+-- require("luasnip.loaders.from_lua").lazy_load()
+-- require("luasnip.loaders.from_vscode").lazy_load()
+-- require("luasnip.loaders.from_snipmate").lazy_load()
 
-require("luasnip.loaders.from_lua").lazy_load()
-require("luasnip.loaders.from_vscode").lazy_load()
-require("luasnip.loaders.from_snipmate").lazy_load()
-
-local luasnip = require("luasnip")
+-- local luasnip = require("luasnip")
 local icons = require("options.icons")
 
 cmp.setup({
   sources = {
     { name = "nvim_lsp" },
     { name = "path" },
-    { name = "luasnip" },
+    -- { name = "luasnip" },
     { name = "buffer" },
     { name = "treesitter" },
+    { name = "nvim_lsp_signature_help" },
     -- { name = "crates" },
   },
   confirm_opts = {
     behavior = cmp.ConfirmBehavior.Replace,
     select = false,
   },
-  snippet = {
-    expand = function(args)
-      require("luasnip").lsp_expand(args.body)
-    end,
-  },
+  -- snippet = {
+  --   expand = function(args)
+  --     require("luasnip").lsp_expand(args.body)
+  --   end,
+  -- },
   completion = {
     keyword_length = 0,
     completeopt = "menu,menuone,noinsert",
@@ -58,7 +59,7 @@ cmp.setup({
         nvim_lsp = "(LSP)",
         path = "(Path)",
         vsnip = "(Snippet)",
-        luasnip = "(Snippet)",
+        -- luasnip = "(Snippet)",
         buffer = "(Buffer)",
         tmux = "(TMUX)",
         treesitter = "(TreeSitter)",
@@ -80,8 +81,8 @@ cmp.setup({
     ["<Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
-      elseif luasnip.locally_jumpable(1) then
-        luasnip.jump(1)
+      -- elseif luasnip.locally_jumpable(1) then
+      --   luasnip.jump(1)
       else
         fallback()
       end
@@ -89,8 +90,8 @@ cmp.setup({
     ["<S-Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
-      elseif luasnip.locally_jumpable(-1) then
-        luasnip.jump(-1)
+      -- elseif luasnip.locally_jumpable(-1) then
+      --   luasnip.jump(-1)
       else
         fallback()
       end

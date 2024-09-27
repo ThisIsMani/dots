@@ -63,7 +63,6 @@ end
 function M.common_on_attach(client, bufnr)
   local opts = { buffer = bufnr, silent = true }
   local set = vim.keymap.set
-  set("n", "gD", "<cmd>Telescope lsp_type_definitions<CR>", opts)
   set("n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts)
   set("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
   set("n", "gI", "<cmd>Telescope lsp_implementations<CR>", opts)
@@ -71,14 +70,14 @@ function M.common_on_attach(client, bufnr)
   set("n", "gl", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
   setup_document_highlight(client, bufnr)
   setup_codelens_refresh(client, bufnr)
-  vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
-  vim.api.nvim_buf_set_option(bufnr, "formatexpr", "v:lua.vim.lsp.formatexpr(#{timeout_ms:500})")
+  -- vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
+  -- vim.api.nvim_buf_set_option(bufnr, "formatexpr", "v:lua.vim.lsp.formatexpr(#{timeout_ms:500})")
   if client.server_capabilities.inlayHintProvider then
     vim.lsp.inlay_hint.enable(true)
   end
 
-  local lsp_signature = require("lsp_signature")
-  lsp_signature.on_attach(client, bufnr)
+  -- local lsp_signature = require("lsp_signature")
+  -- lsp_signature.on_attach(client, bufnr)
 
   if client.server_capabilities.documentSymbolProvider then
     local navic = require("nvim-navic")

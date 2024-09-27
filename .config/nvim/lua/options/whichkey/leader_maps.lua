@@ -1,108 +1,89 @@
 local which_key = require("which-key")
 
-local lopts = {
-  mode = "n", -- NORMAL mode
-  prefix = "<leader>",
-  buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
-  silent = true, -- use `silent` when creating keymaps
-  noremap = true, -- use `noremap` when creating keymaps
-  nowait = true, -- use `nowait` when creating keymaps
-}
+which_key.add({
+  { "<leader>a", group = "AI" },
 
-local lmappings = {
-  ["w"] = { "<cmd>w!<CR>", "Save" },
-  ["q"] = { "<cmd>lua require('options.utils').smart_quit()<CR>", "Quit" },
-  ["e"] = { "<cmd>Oil --float<cr>", "Explorer" },
-  ["c"] = { "<cmd>lua require('mani.functions').buf_kill 'bd'<CR>", "Close Buffer" },
-  ["f"] = { "<cmd>Telescope find_files<CR>", "Find file" },
-  ["S"] = { "<cmd>Telescope grep_string<CR>", "Find string under cursor" },
-  ["F"] = { "<cmd>Telescope live_grep<cr>", "Find text" },
-  -- ["R"] = { "<cmd>Telescope grep_string<cr>", "Find regex" },
-  ["h"] = { "<cmd>nohlsearch<CR>", "No Highlight" },
-  ["m"] = { "<cmd>Telescope marks<CR>", "List marks" },
-  b = {
-    name = "Buffers",
-    -- j = { "<cmd>BufferLinePick<cr>", "Jump" },
-    j = { "<cmd>Telescope buffers<cr>", "Find" },
-    c = { "<cmd>BufferLinePickClose<cr>", "Pick which buffer to close" },
-    h = { "<cmd>BufferLineCloseLeft<cr>", "Close all to the left" },
-    l = { "<cmd>BufferLineCloseRight<cr>", "Close all to the right" },
-    D = { "<cmd>BufferLineSortByDirectory<cr>", "Sort by directory" },
-    L = { "<cmd>BufferLineSortByExtension<cr>", "Sort by extension" },
-    C = { "<cmd>%bdelete<cr>", "Close all buffers" },
-  },
-  g = {
-    name = "Git",
-    g = { "<cmd>tab Git<CR>", "Git Screen" },
-    j = { "<cmd>lua require 'gitsigns'.next_hunk({navigation_message = false})<cr>", "Next Hunk" },
-    k = { "<cmd>lua require 'gitsigns'.prev_hunk({navigation_message = false})<cr>", "Prev Hunk" },
-    l = { "<cmd>lua require 'gitsigns'.blame_line()<cr>", "Blame" },
-    p = { "<cmd>lua require 'gitsigns'.preview_hunk()<cr>", "Preview Hunk" },
-    r = { "<cmd>lua require 'gitsigns'.reset_hunk()<cr>", "Reset Hunk" },
-    R = { "<cmd>lua require 'gitsigns'.reset_buffer()<cr>", "Reset Buffer" },
-    s = { "<cmd>lua require 'gitsigns'.stage_hunk()<cr>", "Stage Hunk" },
-    u = {
-      "<cmd>lua require 'gitsigns'.undo_stage_hunk()<cr>",
-      "Undo Stage Hunk",
-    },
-    o = { "<cmd>Telescope git_status<cr>", "Git status" },
-    b = { "<cmd>Telescope git_branches<cr>", "Checkout branch" },
-    c = { "<cmd>Telescope git_commits<cr>", "Checkout commit" },
-    C = { "<cmd>Telescope git_bcommits<cr>", "Checkout commit(for current file)" },
-    d = { "<cmd>Gitsigns diffthis HEAD<cr>", "Git Diff" },
-    w = { "<cmd>lua require('telescope').extensions.git_worktree.git_worktrees()<cr>", "Git Worktrees" },
-    n = { "<cmd>lua require 'telescope'.extensions.git_worktree.create_git_worktree()<cr>", "Create Worktree" },
-  },
-  l = {
-    name = "LSP",
-    a = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action" },
-    d = { "<cmd>Telescope diagnostics bufnr=0<cr>", "Buffer Diagnostics" },
-    w = { "<cmd>Telescope diagnostics<cr>", "Diagnostics" },
-    f = { "<cmd>lua vim.lsp.buf.format{async=true}<cr>", "Format" },
-    i = { "<cmd>LspInfo<cr>", "Info" },
-    I = { "<cmd>Mason<cr>", "Mason Info" },
-    j = { vim.diagnostic.goto_next, "Next Diagnostic" },
-    k = { vim.diagnostic.goto_prev, "Prev Diagnostic" },
-    l = { vim.lsp.codelens.run, "CodeLens Action" },
-    L = { "<cmd>lua require('lsp_lines').toggle()<cr>", "Toggle Lsp Lines" },
-    q = { vim.diagnostic.setloclist, "Quickfix" },
-    r = { vim.lsp.buf.rename, "Rename" },
-    R = { "<cmd>LspRestart<cr>", "Lsp Restart" },
-    s = { "<cmd>Telescope lsp_document_symbols<cr>", "Document Symbols" },
-    S = { "<cmd>Telescope lsp_live_workspace_symbols<cr>", "Workspace Symbols" },
-    e = { "<cmd>Telescope quickfix<cr>", "Quickfix list" },
-    c = {
-      name = "Calls",
-      o = { "<cmd>Telescope lsp_outgoing_calls<cr>", "Outgoing calls" },
-      i = { "<cmd>Telescope lsp_incoming_calls<cr>", "Incoming calls" },
-    },
-  },
-  s = {
-    name = "Search",
-    a = { "<cmd>Telescope builtin<cr>", "Search Searchable" },
-    b = { "<cmd>Telescope git_branches<cr>", "Checkout branch" },
-    c = { "<cmd>Telescope colorschemes<cr>", "Colorscheme" },
-    h = { "<cmd>Telescope help_tags<cr>", "Find Help" },
-    H = { "<cmd>Telescope highlights<cr>", "Find highlight groups" },
-    M = { "<cmd>Telescope man_pages<cr>", "Man Pages" },
-    r = { "<cmd>Telescope oldfiles<cr>", "Open Recent File" },
-    R = { "<cmd>Telescope registers<cr>", "Registers" },
-    k = { "<cmd>Telescope keymaps<cr>", "Keymaps" },
-    C = { "<cmd>Telescope commands<cr>", "Commands" },
-    p = { "<cmd>Telescope planets<cr>", "Planets" },
-  },
-  r = {
-    name = "Resession",
-    f = { "<CMD>Telescope resession<CR>", "Find Session" },
-    s = { "<CMD>lua require('resession').save()<CR>", "Save Session" },
-  },
-  t = {
-    name = "Terminal",
-    f = { "<cmd>ToggleTerm direction=float<cr>", "Float" },
-    h = { "<cmd>ToggleTerm size=10 direction=horizontal<cr>", "Horizontal" },
-    v = { "<cmd>ToggleTerm size=80 direction=vertical<cr>", "Vertical" },
-  },
-  z = { "<cmd>ZenMode<cr>", "Zen Mode" },
-}
+  { "<leader>ac", group = "Copilot" },
+  { "<leader>acc", "<cmd>CopilotChatToggle<cr>", desc = "Toggle Copilot Chat" },
+  { "<leader>acd", "<cmd>CopilotChatFixDiagnostic<cr>", desc = "Fix diagnostic" },
+  { "<leader>acr", "<cmd>CopilotChatReview<cr>", desc = "Review code", mode = "v" },
+  { "<leader>aco", "<cmd>CopilotChatOptimize<cr>", desc = "Optimize code", mode = "v" },
+  { "<leader>ace", "<cmd>CopilotChatExplain<cr>", desc = "Explain code", mode = "v" },
 
-which_key.register(lmappings, lopts)
+  { "<leader>aa", group = "Avante" },
+  { "<leader>aac", "<cmd>AvanteToggle<cr>", desc = "Toggle Avante Chat" },
+  { "<leader>acr", "<cmd>AvanteClear<cr>", desc = "Clear Avante" },
+
+  { "<leader>w", group = "Window" },
+  { "<leader>wq", require("options.utils").smart_quit, desc = "Quit" },
+  { "<leader>wl", "<cmd>FocusSplitRight<CR>", desc = "Go/Split right" },
+  { "<leader>wh", "<cmd>FocusSplitLeft<CR>", desc = "Go/Split left" },
+  { "<leader>wk", "<cmd>FocusSplitUp<CR>", desc = "Go/Split up" },
+  { "<leader>wj", "<cmd>FocusSplitDown<CR>", desc = "Go/Split bottom" },
+  { "<leader>wz", "<cmd>ZenMode<cr>", desc = "Zen Mode" },
+
+  { "<leader>n", group = "Neovim helpers" },
+  { "<leader>nh", "<cmd>nohlsearch<CR>", desc = "No Highlight" },
+  { "<leader>ne", "<cmd>Oil --float<cr>", desc = "Oil" },
+
+  { "<leader>f", group = "File" },
+  { "<leader>ff", "<cmd>Telescope find_files<CR>", desc = "Find file" },
+
+  { "<leader>b", group = "Buffers" },
+  { "<leader>bf", "<cmd>Telescope buffers<cr>", desc = "Find" },
+  { "<leader>bd", require("options.utils").buf_kill, desc = "Delete buffer" },
+  { "<leader>bh", "<cmd>BufferLineCloseLeft<cr>", desc = "Close all to the left" },
+  { "<leader>bl", "<cmd>BufferLineCloseRight<cr>", desc = "Close all to the right" },
+  { "<leader>bD", "<cmd>%bdelete<cr>", desc = "Delete all buffers" },
+  { "<leader>bw", "<cmd>w!<cr>", desc = "Save buffer" },
+
+  { "<leader>g", group = "Git" },
+  { "<leader>gg", "<cmd>DiffviewOpen<CR>", desc = "Git Screen" },
+  { "<leader>gb", "<cmd>lua require 'gitsigns'.blame_line()<cr>", desc = "Blame" },
+  { "<leader>gR", "<cmd>lua require 'gitsigns'.reset_buffer()<cr>", desc = "Reset Buffer" },
+  { "<leader>gs", "<cmd>Telescope git_status<cr>", desc = "Git status" },
+  { "<leader>gc", "<cmd>Telescope git_commits<cr>", desc = "Checkout commit" },
+  { "<leader>gd", "<cmd>Gitsigns diffthis HEAD<cr>", desc = "Git Diff" },
+  -- { "<leader>gw", require("telescope").extensions.git_worktree.git_worktrees, desc = "Git Worktrees" },
+  -- { "<leader>gn", require("telescope").extensions.git_worktree.create_git_worktree, desc = "Create Worktree" },
+
+  { "<leader>gh", group = "Git hunk" },
+  { "<leader>ghj", "<cmd>Gitsigns next_hunk<cr>", desc = "Next Hunk" },
+  { "<leader>ghk", "<cmd>Gitsigns prev_hunk<cr>", desc = "Prev Hunk" },
+  { "<leader>ghp", "<cmd>lua require 'gitsigns'.preview_hunk()<cr>", desc = "Preview Hunk" },
+  { "<leader>ghr", "<cmd>lua require 'gitsigns'.reset_hunk()<cr>", desc = "Reset Hunk" },
+  { "<leader>ghs", "<cmd>lua require 'gitsigns'.stage_hunk()<cr>", desc = "Stage Hunk" },
+  { "<leader>ghu", "<cmd>lua require 'gitsigns'.undo_stage_hunk()<cr>", desc = "Undo Stage Hunk" },
+
+  { "<leader>l", group = "LSP" },
+  { "<leader>la", vim.lsp.buf.code_action, desc = "Code Action" },
+  { "<leader>ld", "<cmd>Telescope diagnostics bufnr=0<cr>", desc = "Buffer Diagnostics" },
+  { "<leader>lw", "<cmd>Telescope diagnostics<cr>", desc = "Diagnostics" },
+  {
+    "<leader>lf",
+    function()
+      vim.lsp.buf.format({ async = true })
+    end,
+    desc = "Format",
+  },
+  { "<leader>li", "<cmd>LspInfo<cr>", desc = "Info" },
+  { "<leader>ll", vim.lsp.codelens.run, desc = "CodeLens Action" },
+  -- { "<leader>lL", require("lsp_lines").toggle, desc = "Toggle Lsp Lines" },
+  { "<leader>lr", vim.lsp.buf.rename, desc = "Rename" },
+  { "<leader>lR", "<cmd>LspRestart<cr>", desc = "Lsp Restart" },
+  { "<leader>ls", "<cmd>Telescope lsp_document_symbols<cr>", desc = "Document Symbols" },
+  { "<leader>lS", "<cmd>Telescope lsp_live_workspace_symbols<cr>", desc = "Workspace Symbols" },
+
+  { "<leader>lc", group = "Calls" },
+  { "<leader>lco", "<cmd>Telescope lsp_outgoing_calls<cr>", desc = "Outgoing calls" },
+  { "<leader>lci", "<cmd>Telescope lsp_incoming_calls<cr>", desc = "Incoming calls" },
+
+  { "<leader>t", group = "Telescope" },
+  { "<leader>ta", "<cmd>Telescope builtin<cr>", desc = "Search all options" },
+  { "<leader>tg", "<cmd>Telescope live_grep<cr>", desc = "Find text" },
+  { "<leader>ts", "<cmd>Telescope grep_string<CR>", desc = "Find string under cursor" },
+
+  { "<leader>tr", group = "Recession" },
+  { "<leader>trf", "<CMD>Telescope resession<CR>", desc = "Find Session" },
+  { "<leader>trs", require("resession").save, desc = "Save Session" },
+})

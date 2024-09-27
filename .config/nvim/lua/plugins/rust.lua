@@ -1,5 +1,6 @@
 return {
   "mrcjkb/rustaceanvim",
+  dependencies = { "windwp/nvim-autopairs" },
   ft = { "rust" },
   opts = {
     tools = {
@@ -8,7 +9,7 @@ return {
       },
     },
     server = {
-      cmd = { "ra-multiplex" },
+      -- cmd = { "ra-multiplex" },
       on_attach = function(client, bufnr)
         require("options.lsp.utils").common_on_attach(client, bufnr)
       end,
@@ -31,5 +32,13 @@ return {
   },
   config = function(_, opts)
     vim.g.rustaceanvim = vim.tbl_deep_extend("force", {}, opts or {})
+
+    local npairs = require("nvim-autopairs")
+    local basic = require("nvim-autopairs.rules.basic")
+    local opt = npairs.config
+    local bracket = basic.bracket_creator(opt)
+    npairs.add_rules({
+      bracket("<", ">"),
+    })
   end,
 }

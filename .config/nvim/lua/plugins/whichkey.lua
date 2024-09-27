@@ -3,5 +3,4 @@ return {
   config = function()
     require("options.whichkey")
   end,
-  -- cmd = "WhichKey",
 }
