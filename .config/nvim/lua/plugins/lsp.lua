@@ -9,7 +9,7 @@ return {
     "folke/neodev.nvim",
     "SmiteshP/nvim-navic",
   },
-  event = { "BufReadPre", "BufNewFile" },
+  event = "BufReadPost",
   config = function()
     require("options.lsp")
   end,

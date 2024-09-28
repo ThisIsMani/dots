@@ -11,3 +11,4 @@ which_key.setup({
 })
 
 require("options.whichkey.leader_maps")
+require("options.whichkey.bracket_maps")

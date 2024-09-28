@@ -3,16 +3,15 @@ local which_key = require("which-key")
 which_key.add({
   { "<leader>a", group = "AI" },
 
-  { "<leader>ac", group = "Copilot" },
-  { "<leader>acc", "<cmd>CopilotChatToggle<cr>", desc = "Toggle Copilot Chat" },
-  { "<leader>acd", "<cmd>CopilotChatFixDiagnostic<cr>", desc = "Fix diagnostic" },
-  { "<leader>acr", "<cmd>CopilotChatReview<cr>", desc = "Review code", mode = "v" },
-  { "<leader>aco", "<cmd>CopilotChatOptimize<cr>", desc = "Optimize code", mode = "v" },
-  { "<leader>ace", "<cmd>CopilotChatExplain<cr>", desc = "Explain code", mode = "v" },
+  { "<leader>ac", group = "Code Companion" },
+  { "<leader>acc", "<cmd>CodeCompanionToggle<cr>", desc = "Toggle chat" },
+  { "<leader>acc", "<cmd>CodeCompanionChat Add<cr>", desc = "Add code to chat", mode = "v" },
+  { "<leader>aci", "<cmd>CodeCompanion<cr>", desc = "Toggle inline chat" },
 
   { "<leader>aa", group = "Avante" },
   { "<leader>aac", "<cmd>AvanteToggle<cr>", desc = "Toggle Avante Chat" },
   { "<leader>acr", "<cmd>AvanteClear<cr>", desc = "Clear Avante" },
+  { "<leader>aaa", "<cmd>AvanteAsk<cr>", desc = "Ask Avante", mode = "v" },
 
   { "<leader>w", group = "Window" },
   { "<leader>wq", require("options.utils").smart_quit, desc = "Quit" },
@@ -38,11 +37,9 @@ which_key.add({
   { "<leader>bw", "<cmd>w!<cr>", desc = "Save buffer" },
 
   { "<leader>g", group = "Git" },
-  { "<leader>gg", "<cmd>DiffviewOpen<CR>", desc = "Git Screen" },
-  { "<leader>gb", "<cmd>lua require 'gitsigns'.blame_line()<cr>", desc = "Blame" },
-  { "<leader>gR", "<cmd>lua require 'gitsigns'.reset_buffer()<cr>", desc = "Reset Buffer" },
-  { "<leader>gs", "<cmd>Telescope git_status<cr>", desc = "Git status" },
-  { "<leader>gc", "<cmd>Telescope git_commits<cr>", desc = "Checkout commit" },
+  { "<leader>gg", "<cmd>Neogit<CR>", desc = "Git Screen" },
+  { "<leader>gb", require("gitsigns").blame_line, desc = "Blame" },
+  { "<leader>gR", require("gitsigns").reset_buffer, desc = "Reset Buffer" },
   { "<leader>gd", "<cmd>Gitsigns diffthis HEAD<cr>", desc = "Git Diff" },
   -- { "<leader>gw", require("telescope").extensions.git_worktree.git_worktrees, desc = "Git Worktrees" },
   -- { "<leader>gn", require("telescope").extensions.git_worktree.create_git_worktree, desc = "Create Worktree" },
@@ -50,15 +47,22 @@ which_key.add({
   { "<leader>gh", group = "Git hunk" },
   { "<leader>ghj", "<cmd>Gitsigns next_hunk<cr>", desc = "Next Hunk" },
   { "<leader>ghk", "<cmd>Gitsigns prev_hunk<cr>", desc = "Prev Hunk" },
-  { "<leader>ghp", "<cmd>lua require 'gitsigns'.preview_hunk()<cr>", desc = "Preview Hunk" },
-  { "<leader>ghr", "<cmd>lua require 'gitsigns'.reset_hunk()<cr>", desc = "Reset Hunk" },
-  { "<leader>ghs", "<cmd>lua require 'gitsigns'.stage_hunk()<cr>", desc = "Stage Hunk" },
-  { "<leader>ghu", "<cmd>lua require 'gitsigns'.undo_stage_hunk()<cr>", desc = "Undo Stage Hunk" },
+  { "<leader>ghp", require("gitsigns").preview_hunk, desc = "Preview Hunk" },
+  { "<leader>ghr", require("gitsigns").reset_hunk, desc = "Reset Hunk" },
+  { "<leader>ghs", require("gitsigns").stage_hunk, desc = "Stage Hunk" },
+  { "<leader>ghu", require("gitsigns").undo_stage_hunk, desc = "Undo Stage Hunk" },
 
   { "<leader>l", group = "LSP" },
   { "<leader>la", vim.lsp.buf.code_action, desc = "Code Action" },
-  { "<leader>ld", "<cmd>Telescope diagnostics bufnr=0<cr>", desc = "Buffer Diagnostics" },
-  { "<leader>lw", "<cmd>Telescope diagnostics<cr>", desc = "Diagnostics" },
+  { "<leader>ld", "<cmd>Telescope diagnostics<cr>", desc = "Diagnostics" },
+  {
+    "<leader>le",
+    function()
+      require("telescope.builtin").diagnostics({ severity = vim.diagnostic.severity.ERROR })
+    end,
+    desc = "Diagnostics",
+  },
+
   {
     "<leader>lf",
     function()
@@ -85,5 +89,15 @@ which_key.add({
 
   { "<leader>tr", group = "Recession" },
   { "<leader>trf", "<CMD>Telescope resession<CR>", desc = "Find Session" },
-  { "<leader>trs", require("resession").save, desc = "Save Session" },
+  {
+    "<leader>trs",
+    function()
+      require("resession").save()
+    end,
+    desc = "Save Session",
+  },
+
+  { "<leader>x", group = "Trouble" },
+  { "<leader>xd", "<cmd>Trouble diagnostics toggle<cr>", desc = "Toggle Trouble diagnostics" },
+  { "<leader>xq", "<cmd>Trouble quickfix toggle<cr>", desc = "Toggle Trouble diagnostics" },
 })

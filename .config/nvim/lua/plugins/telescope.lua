@@ -7,7 +7,6 @@ return {
     "nvim-lua/plenary.nvim",
     "stevearc/dressing.nvim",
     "nvim-telescope/telescope-fzf-native.nvim",
-    "scottmckendry/telescope-resession.nvim",
-    "stevearc/resession.nvim",
   },
+  cmd = "Telescope",
 }

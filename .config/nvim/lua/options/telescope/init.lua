@@ -5,6 +5,15 @@ local icons = require("options.icons")
 
 local get_pickers = require("options.telescope.pickers")
 
+local transform_mod = require("telescope.actions.mt").transform_mod
+
+local custom_actions = transform_mod({
+  smart_send_to_qflist = function(prompt_bufnr)
+    actions.smart_send_to_qflist(prompt_bufnr)
+    require("trouble").open({ mode = "qflist", focus = true })
+  end,
+})
+
 require("telescope").setup({
   defaults = {
     prompt_prefix = icons.ui.Telescope .. " ",
@@ -27,7 +36,7 @@ require("telescope").setup({
       i = {
         ["<C-j>"] = actions.preview_scrolling_down,
         ["<C-k>"] = actions.preview_scrolling_up,
-        ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
+        ["<C-q>"] = custom_actions.smart_send_to_qflist,
         ["<CR>"] = actions.select_default,
         ["<ScrollWheelDown>"] = actions.preview_scrolling_down,
         ["<ScrollWheelUp>"] = actions.preview_scrolling_up,
@@ -37,7 +46,7 @@ require("telescope").setup({
       n = {
         ["<C-j>"] = actions.preview_scrolling_down,
         ["<C-k>"] = actions.preview_scrolling_up,
-        ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
+        ["<C-q>"] = custom_actions.smart_send_to_qflist,
         ["<ScrollWheelDown>"] = actions.preview_scrolling_down,
         ["<ScrollWheelUp>"] = actions.preview_scrolling_up,
         ["<ScrollWheelLeft>"] = actions.preview_scrolling_left,

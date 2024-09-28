@@ -3,4 +3,5 @@ return {
   config = function()
     require("options.whichkey")
   end,
+  event = "VeryLazy",
 }

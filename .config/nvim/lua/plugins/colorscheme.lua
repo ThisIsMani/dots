@@ -4,11 +4,10 @@ return {
     "cormacrelf/dark-notify",
     "norcalli/nvim-colorizer.lua",
   },
-  lazy = false,
+  event = "VimEnter",
   config = function()
     require("colorizer").setup()
     require("onedark").setup({
-      style = "light",
       toggle_style_list = { "dark", "light" },
       highlights = {
         Winbar = { bg = "$bg0" },

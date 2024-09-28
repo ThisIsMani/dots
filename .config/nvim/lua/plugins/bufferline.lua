@@ -4,5 +4,5 @@ return {
   config = function()
     require("options.bufferline")
   end,
-  -- event = "VimEnter",
+  event = "BufWinEnter",
 }
