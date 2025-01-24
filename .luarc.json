@@ -1,6 +1,0 @@
-{
-    "diagnostics.disable": [
-        "unused-local",
-        "redefined-local"
-    ]
-}

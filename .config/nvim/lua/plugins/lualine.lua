@@ -3,5 +3,5 @@ return {
   config = function()
     require("options.lualine")
   end,
-  event = "BufWinEnter",
+  event = "VeryLazy",
 }

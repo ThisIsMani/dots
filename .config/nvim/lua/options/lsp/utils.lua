@@ -79,10 +79,10 @@ function M.common_on_attach(client, bufnr)
   -- local lsp_signature = require("lsp_signature")
   -- lsp_signature.on_attach(client, bufnr)
 
-  if client.server_capabilities.documentSymbolProvider then
-    local navic = require("nvim-navic")
-    navic.attach(client, bufnr)
-  end
+  -- if client.server_capabilities.documentSymbolProvider then
+  --   local navic = require("nvim-navic")
+  --   navic.attach(client, bufnr)
+  -- end
 end
 
 function M.common_capabilities()

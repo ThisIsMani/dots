@@ -1,5 +1,4 @@
 local which_key = require("which-key")
-local icons = require("options.icons")
 
 which_key.setup({
   icons = {

@@ -1,9 +1,9 @@
 return {
   "lukas-reineke/indent-blankline.nvim",
   main = "ibl",
-  event = "BufReadPost",
+  event = "VeryLazy",
   opts = {
-    indent = { char = require("options.icons").ui.LineLeft },
+    indent = { char = "▏" },
     scope = { enabled = true },
   },
 }

@@ -1,7 +1,6 @@
 local M = {}
 
 function M.smart_quit()
-  local bufnr = vim.api.nvim_get_current_buf()
   local modified = vim.api.nvim_get_option_value("modified", { buf = 0 })
   if modified then
     vim.ui.input({
@@ -16,40 +15,9 @@ function M.smart_quit()
   end
 end
 
-function M.buf_kill(kill_command, bufnr, force)
-  kill_command = kill_command or "bd"
-
+local function delete_buf(kill_command, bufnr, force)
   local bo = vim.bo
   local api = vim.api
-  local fmt = string.format
-  local fnamemodify = vim.fn.fnamemodify
-
-  if bufnr == 0 or bufnr == nil then
-    bufnr = api.nvim_get_current_buf()
-  end
-
-  local bufname = api.nvim_buf_get_name(bufnr)
-
-  if not force then
-    local warning
-    if bo[bufnr].modified then
-      warning = fmt([[No write since last change for (%s)]], fnamemodify(bufname, ":t"))
-    elseif api.nvim_get_option_value("buftype", { buf = 0 }) == "terminal" then
-      warning = fmt([[Terminal %s will be killed]], bufname)
-    end
-    if warning then
-      vim.ui.input({
-        prompt = string.format([[%s. Close it anyway? (y/n) ]], warning),
-      }, function(choice)
-        if input == "y" then
-          force = true
-        end
-      end)
-      if not force then
-        return
-      end
-    end
-  end
 
   -- Get list of windows IDs with the buffer to close
   local windows = vim.tbl_filter(function(win)
@@ -87,17 +55,47 @@ function M.buf_kill(kill_command, bufnr, force)
   end
 end
 
-function M.isempty(s)
-  return s == nil or s == ""
-end
+function M.buf_kill(kill_command, bufnr, force)
+  kill_command = kill_command or "bd"
+  force = force or false
 
-function M.get_buf_option(opt)
-  local status_ok, buf_option = pcall(vim.api.nvim_get_option_value, opt, { buf = 0 })
-  if not status_ok then
-    return nil
-  else
-    return buf_option
+  local bo = vim.bo
+  local api = vim.api
+  local fmt = string.format
+  local fnamemodify = vim.fn.fnamemodify
+
+  if bufnr == 0 or bufnr == nil then
+    bufnr = api.nvim_get_current_buf()
+  end
+
+  local bufname = api.nvim_buf_get_name(bufnr)
+
+  if not force then
+    local warning
+    if bo[bufnr].modified then
+      warning = fmt([[No write since last change for (%s)]], fnamemodify(bufname, ":t"))
+    else
+      delete_buf(kill_command, bufnr, false)
+      return
+    end
+    if warning then
+      vim.ui.input({
+        prompt = string.format([[%s. Close it anyway? (y/n) ]], warning),
+      }, function(choice)
+        if choice == "y" then
+          delete_buf(kill_command, bufnr, true)
+        end
+      end)
+    end
   end
 end
+
+M.sources = {
+  nvim_lsp = { name = "nvim_lsp", title = "LSP" },
+  path = { name = "path", title = "Path" },
+  buffer = { name = "buffer", title = "Buffer" },
+  treesitter = { name = "treesitter", title = "TreeSitter" },
+  nvim_lsp_signature_help = { name = "nvim_lsp_signature_help", title = "Signature Help" },
+}
 
 return M

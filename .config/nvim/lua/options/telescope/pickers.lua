@@ -13,7 +13,6 @@ return function(actions)
     buffers = {
       theme = "dropdown",
       previewer = false,
-      initial_mode = "normal",
       mappings = {
         i = {
           ["<C-d>"] = actions.delete_buffer,
@@ -50,6 +49,11 @@ return function(actions)
     },
     lsp_outgoing_calls = {
       initial_mode = "normal",
+    },
+    lsp_document_symbols = {
+      theme = "dropdown",
+      initial_mode = "normal",
+      previewer = true,
     },
   }
 end

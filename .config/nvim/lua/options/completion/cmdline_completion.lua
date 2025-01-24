@@ -8,8 +8,6 @@ cmp.setup.cmdline(":", {
     completion = cmp.config.window.bordered(),
   },
   completion = {
-    ---@usage The minimum length of a word to complete on.
-    keyword_length = 0,
     completeopt = "menu,menuone,noselect",
   },
   mapping = cmp.mapping.preset.cmdline({
@@ -31,8 +29,6 @@ cmp.setup.cmdline({ "/", "?" }, {
     completion = cmp.config.window.bordered(),
   },
   completion = {
-    ---@usage The minimum length of a word to complete on.
-    keyword_length = 0,
     completeopt = "menu,menuone,noselect",
   },
   mapping = cmp.mapping.preset.cmdline({

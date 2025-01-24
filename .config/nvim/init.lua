@@ -13,14 +13,14 @@ if not vim.uv.fs_stat(lazypath) then
     lazypath,
   })
 end
-
--- Add lazy to the `runtimepath`, this allows us to `require` it.
----@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
 -- Set up lazy, and load `lua/plugins/` folder
-require("lazy").setup({ import = "plugins" }, {
-  change_detection = {
-    notify = false,
-  },
-})
+require("lazy").setup(
+  { { import = "plugins" }, { import = "plugins.lsp" }, { import = "plugins.git" }, { import = "plugins.treesitter" } },
+  {
+    change_detection = {
+      notify = false,
+    },
+  }
+)

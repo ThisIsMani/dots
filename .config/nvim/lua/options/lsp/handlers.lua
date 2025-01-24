@@ -1,5 +1,3 @@
-local icons = require "options.icons"
-
 local float = {
   focusable = true,
   style = "minimal",
@@ -12,10 +10,10 @@ local config = {
   signs = {
     active = true,
     values = {
-      { name = "DiagnosticSignError", text = icons.diagnostics.Error },
-      { name = "DiagnosticSignWarn", text = icons.diagnostics.Warning },
-      { name = "DiagnosticSignHint", text = icons.diagnostics.Hint },
-      { name = "DiagnosticSignInfo", text = icons.diagnostics.Info },
+      { name = "DiagnosticSignError", text = "" },
+      { name = "DiagnosticSignWarn", text = "" },
+      { name = "DiagnosticSignHint", text = "󰌶" },
+      { name = "DiagnosticSignInfo", text = "" },
     },
   },
   update_in_insert = true,

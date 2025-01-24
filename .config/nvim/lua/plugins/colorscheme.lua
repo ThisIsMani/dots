@@ -2,11 +2,8 @@ return {
   "navarasu/onedark.nvim",
   dependencies = {
     "cormacrelf/dark-notify",
-    "norcalli/nvim-colorizer.lua",
   },
-  event = "VimEnter",
   config = function()
-    require("colorizer").setup()
     require("onedark").setup({
       toggle_style_list = { "dark", "light" },
       highlights = {

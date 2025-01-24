@@ -6,11 +6,7 @@ local function move_or_create_pane(window, pane, direction)
   local active_pane_id = window:active_pane():pane_id()
 
   if active_pane_id == pane:pane_id() then
-    if direction == "Left" or direction == "Right" then
-      window:perform_action(wezterm.action({ SplitHorizontal = { domain = "CurrentPaneDomain" } }), pane)
-    elseif direction == "Up" or direction == "Down" then
-      window:perform_action(wezterm.action({ SplitVertical = { domain = "CurrentPaneDomain" } }), pane)
-    end
+    window:perform_action(wezterm.action({ SplitPane = { direction = direction } }), pane)
     window:perform_action(wezterm.action({ ActivatePaneDirection = direction }), pane)
   end
 end

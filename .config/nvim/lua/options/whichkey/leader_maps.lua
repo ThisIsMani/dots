@@ -2,9 +2,8 @@ local which_key = require("which-key")
 
 which_key.add({
   { "<leader>a", group = "AI" },
-
   { "<leader>ac", group = "Code Companion" },
-  { "<leader>acc", "<cmd>CodeCompanionToggle<cr>", desc = "Toggle chat" },
+  { "<leader>acc", "<cmd>CodeCompanionChat<cr>", desc = "Open chat" },
   { "<leader>acc", "<cmd>CodeCompanionChat Add<cr>", desc = "Add code to chat", mode = "v" },
   { "<leader>aci", "<cmd>CodeCompanion<cr>", desc = "Toggle inline chat" },
 
@@ -24,9 +23,11 @@ which_key.add({
   { "<leader>n", group = "Neovim helpers" },
   { "<leader>nh", "<cmd>nohlsearch<CR>", desc = "No Highlight" },
   { "<leader>ne", "<cmd>Oil --float<cr>", desc = "Oil" },
+  { "<leader>nq", "<cmd>qa<cr>", desc = "Quit Neovim" },
 
   { "<leader>f", group = "File" },
   { "<leader>ff", "<cmd>Telescope find_files<CR>", desc = "Find file" },
+  { "<leader>fd", "<cmd>DiffviewOpen HEAD -- %<cr>", desc = "File diff" },
 
   { "<leader>b", group = "Buffers" },
   { "<leader>bf", "<cmd>Telescope buffers<cr>", desc = "Find" },
@@ -40,9 +41,7 @@ which_key.add({
   { "<leader>gg", "<cmd>Neogit<CR>", desc = "Git Screen" },
   { "<leader>gb", require("gitsigns").blame_line, desc = "Blame" },
   { "<leader>gR", require("gitsigns").reset_buffer, desc = "Reset Buffer" },
-  { "<leader>gd", "<cmd>Gitsigns diffthis HEAD<cr>", desc = "Git Diff" },
-  -- { "<leader>gw", require("telescope").extensions.git_worktree.git_worktrees, desc = "Git Worktrees" },
-  -- { "<leader>gn", require("telescope").extensions.git_worktree.create_git_worktree, desc = "Create Worktree" },
+  { "<leader>gd", "<cmd>DiffviewOpen<cr>", desc = "Git Diff" },
 
   { "<leader>gh", group = "Git hunk" },
   { "<leader>ghj", "<cmd>Gitsigns next_hunk<cr>", desc = "Next Hunk" },
@@ -76,7 +75,8 @@ which_key.add({
   { "<leader>lr", vim.lsp.buf.rename, desc = "Rename" },
   { "<leader>lR", "<cmd>LspRestart<cr>", desc = "Lsp Restart" },
   { "<leader>ls", "<cmd>Telescope lsp_document_symbols<cr>", desc = "Document Symbols" },
-  { "<leader>lS", "<cmd>Telescope lsp_live_workspace_symbols<cr>", desc = "Workspace Symbols" },
+  { "<leader>lS", "<cmd>Telescope lsp_workspace_symbols<cr>", desc = "Workspace Symbols" },
+  { "<leader>ln", "<cmd>Navbuddy<cr>", desc = "NavBuddy" },
 
   { "<leader>lc", group = "Calls" },
   { "<leader>lco", "<cmd>Telescope lsp_outgoing_calls<cr>", desc = "Outgoing calls" },
@@ -86,6 +86,7 @@ which_key.add({
   { "<leader>ta", "<cmd>Telescope builtin<cr>", desc = "Search all options" },
   { "<leader>tg", "<cmd>Telescope live_grep<cr>", desc = "Find text" },
   { "<leader>ts", "<cmd>Telescope grep_string<CR>", desc = "Find string under cursor" },
+  { "<leader>tt", "<cmd>Telescope resume<CR>", desc = "Resume previous search" },
 
   { "<leader>tr", group = "Recession" },
   { "<leader>trf", "<CMD>Telescope resession<CR>", desc = "Find Session" },

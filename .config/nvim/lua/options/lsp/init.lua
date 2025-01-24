@@ -1,17 +1,10 @@
 local lspconfig = require("lspconfig")
-require("options.lsp.mason")
-require("options.lsp.format")
-require("neodev").setup()
-require("fidget").setup({})
 require("options.lsp.handlers")
 
 local opts = require("options.lsp.utils").get_common_opts()
-local servers = require("mason-lspconfig").get_installed_servers()
 
-for _, server in pairs(servers) do
-  server = vim.split(server, "@")[1]
-
-  if server == "lua_ls" then
+require("mason-lspconfig").setup_handlers({
+  ["lua_ls"] = function()
     local new_opts = vim.tbl_deep_extend("force", {
       settings = {
         server_capabilities = {
@@ -25,19 +18,15 @@ for _, server in pairs(servers) do
       },
     }, opts)
     lspconfig.lua_ls.setup(new_opts)
-    goto continue
-  end
+  end,
 
-  if server == "rust_analyzer" then
-    goto continue
-  end
+  ["rust_analyzer"] = function() end,
 
-  lspconfig[server].setup(opts)
-  ::continue::
-end
+  function(server_name)
+    require("lspconfig")[server_name].setup(opts)
+  end,
+})
 
 require("lspconfig.ui.windows").default_options.border = "rounded"
-
-require("options.lsp.navic")
 
 vim.lsp.log.set_level(vim.log.levels.OFF)

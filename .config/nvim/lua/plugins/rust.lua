@@ -1,6 +1,8 @@
 return {
   "mrcjkb/rustaceanvim",
-  dependencies = { "windwp/nvim-autopairs" },
+  dependencies = {
+    "windwp/nvim-autopairs",
+  },
   ft = { "rust" },
   opts = {
     tools = {
@@ -9,7 +11,6 @@ return {
       },
     },
     server = {
-      -- cmd = { "ra-multiplex" },
       on_attach = function(client, bufnr)
         require("options.lsp.utils").common_on_attach(client, bufnr)
       end,
@@ -21,7 +22,7 @@ return {
           procMacro = {
             enable = true,
             ignored = {
-              ["async-trait"] = { "async_trait" },
+              -- ["async-trait"] = { "async_trait" },
               ["napi-derive"] = { "napi" },
               ["async-recursion"] = { "async_recursion" },
             },

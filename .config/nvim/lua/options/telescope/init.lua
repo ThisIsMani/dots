@@ -1,7 +1,4 @@
 local actions = require("telescope.actions")
-local previewers = require("telescope.previewers")
-local sorters = require("telescope.sorters")
-local icons = require("options.icons")
 
 local get_pickers = require("options.telescope.pickers")
 
@@ -16,11 +13,9 @@ local custom_actions = transform_mod({
 
 require("telescope").setup({
   defaults = {
-    prompt_prefix = icons.ui.Telescope .. " ",
-    selection_caret = icons.ui.Forward .. " ",
+    prompt_prefix = " ",
+    selection_caret = " ",
     layout_config = {
-      width = 0.75,
-      preview_cutoff = 120,
       horizontal = {
         preview_width = function(_, cols, _)
           if cols < 120 then
@@ -53,7 +48,6 @@ require("telescope").setup({
         ["<ScrollWheelRight>"] = actions.preview_scrolling_right,
       },
     },
-    pickers = get_pickers(actions),
     set_env = { ["COLORTERM"] = "truecolor" },
   },
   pickers = get_pickers(actions),
