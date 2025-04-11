@@ -98,4 +98,22 @@ M.sources = {
   nvim_lsp_signature_help = { name = "nvim_lsp_signature_help", title = "Signature Help" },
 }
 
+function M.set_keymap(mode, key, action, desc, opts)
+  if opts == nil then
+    opts = {}
+  end
+  opts.desc = desc
+  vim.keymap.set(mode, key, action, opts)
+end
+
+function M.copy_path()
+  local path = vim.fn.expand("%:p")
+  vim.fn.setreg("+", path)
+end
+
+function M.toggle_lsp_lines()
+  local new_config = not vim.diagnostic.config().virtual_lines
+  vim.diagnostic.config({ virtual_lines = new_config })
+end
+
 return M

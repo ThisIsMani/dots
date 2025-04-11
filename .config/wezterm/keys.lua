@@ -1,5 +1,10 @@
 local wezterm = require("wezterm")
 
+-- load plugin
+local workspace_switcher = wezterm.plugin.require("https://github.com/MLFlexer/smart_workspace_switcher.wezterm")
+-- set path to zoxide
+workspace_switcher.zoxide_path = "/opt/homebrew/bin/zoxide"
+
 local function move_or_create_pane(window, pane, direction)
   window:perform_action(wezterm.action({ ActivatePaneDirection = direction }), pane)
 
@@ -51,34 +56,29 @@ local keys = {
     end),
   },
   {
+    key = "k",
+    mods = "CMD",
+    action = wezterm.action.ClearScrollback("ScrollbackAndViewport"),
+  },
+  {
     key = "q",
     mods = "LEADER",
     action = wezterm.action.CloseCurrentPane({ confirm = true }),
   },
   {
-    key = "LeftArrow",
-    mods = "ALT",
-    action = wezterm.action.AdjustPaneSize({ "Left", 5 }),
-  },
-  {
-    key = "RightArrow",
-    mods = "ALT",
-    action = wezterm.action.AdjustPaneSize({ "Right", 5 }),
-  },
-  {
-    key = "UpArrow",
-    mods = "ALT",
-    action = wezterm.action.AdjustPaneSize({ "Up", 5 }),
-  },
-  {
-    key = "DownArrow",
-    mods = "ALT",
-    action = wezterm.action.AdjustPaneSize({ "Down", 5 }),
-  },
-  {
     key = "z",
     mods = "LEADER",
     action = wezterm.action.TogglePaneZoomState,
+  },
+  {
+    key = "s",
+    mods = "LEADER",
+    action = workspace_switcher.switch_workspace(),
+  },
+  {
+    key = "t",
+    mods = "LEADER",
+    action = wezterm.action.ShowLauncherArgs({ flags = "FUZZY|WORKSPACES" }),
   },
 }
 

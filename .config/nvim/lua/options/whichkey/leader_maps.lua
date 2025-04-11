@@ -1,104 +1,107 @@
 local which_key = require("which-key")
+local utils = require("options.utils")
+
+local gitsigns = require("gitsigns")
+local diffview = require("diffview")
+local copilot_chat = require("CopilotChat")
+local focus = require("focus")
+local oil = require("oil")
+local zen_mode = require("zen-mode")
+local telescope = require("telescope.builtin")
+local telescope_resession = require("telescope").extensions.resession
+local recession = require("resession")
+local trouble = require("trouble")
+local bufferline = require("bufferline")
+
+local wo = function(another_function, opts)
+  return function()
+    another_function(opts)
+  end
+end
+
+local cmd = function(command)
+  return function()
+    vim.cmd(command)
+  end
+end
 
 which_key.add({
-  { "<leader>a", group = "AI" },
-  { "<leader>ac", group = "Code Companion" },
-  { "<leader>acc", "<cmd>CodeCompanionChat<cr>", desc = "Open chat" },
-  { "<leader>acc", "<cmd>CodeCompanionChat Add<cr>", desc = "Add code to chat", mode = "v" },
-  { "<leader>aci", "<cmd>CodeCompanion<cr>", desc = "Toggle inline chat" },
-
-  { "<leader>aa", group = "Avante" },
-  { "<leader>aac", "<cmd>AvanteToggle<cr>", desc = "Toggle Avante Chat" },
-  { "<leader>acr", "<cmd>AvanteClear<cr>", desc = "Clear Avante" },
-  { "<leader>aaa", "<cmd>AvanteAsk<cr>", desc = "Ask Avante", mode = "v" },
+  { "<leader>c", group = "Copilot" },
+  { "<leader>cc", copilot_chat.toggle, desc = "Open chat", mode = "v" },
+  { "<leader>cm", copilot_chat.select_model, desc = "Select Copilot model" },
+  { "<leader>cs", copilot_chat.save, desc = "Save Copilot chat" },
+  { "<leader>cl", copilot_chat.load, desc = "Load Copilot chat" },
 
   { "<leader>w", group = "Window" },
-  { "<leader>wq", require("options.utils").smart_quit, desc = "Quit" },
-  { "<leader>wl", "<cmd>FocusSplitRight<CR>", desc = "Go/Split right" },
-  { "<leader>wh", "<cmd>FocusSplitLeft<CR>", desc = "Go/Split left" },
-  { "<leader>wk", "<cmd>FocusSplitUp<CR>", desc = "Go/Split up" },
-  { "<leader>wj", "<cmd>FocusSplitDown<CR>", desc = "Go/Split bottom" },
-  { "<leader>wz", "<cmd>ZenMode<cr>", desc = "Zen Mode" },
+  { "<leader>wq", utils.smart_quit, desc = "Quit" },
+  { "<leader>wl", wo(focus.split_command, "l"), desc = "Go/Split right" },
+  { "<leader>wh", wo(focus.split_command, "h"), desc = "Go/Split left" },
+  { "<leader>wk", wo(focus.split_command, "k"), desc = "Go/Split up" },
+  { "<leader>wj", wo(focus.split_command, "j"), desc = "Go/Split bottom" },
+  { "<leader>wz", zen_mode.toggle, desc = "Zen Mode" },
 
   { "<leader>n", group = "Neovim helpers" },
-  { "<leader>nh", "<cmd>nohlsearch<CR>", desc = "No Highlight" },
-  { "<leader>ne", "<cmd>Oil --float<cr>", desc = "Oil" },
-  { "<leader>nq", "<cmd>qa<cr>", desc = "Quit Neovim" },
+  { "<leader>nh", cmd("noh"), desc = "No Highlight" },
+  { "<leader>ne", oil.open_float, desc = "Oil" },
+  { "<leader>nq", cmd("qa"), desc = "Quit Neovim" },
+
+  { "<leader>nu", group = "Neovim utils" },
+  { "<leader>nup", utils.copy_path, desc = "Copy file path" },
 
   { "<leader>f", group = "File" },
-  { "<leader>ff", "<cmd>Telescope find_files<CR>", desc = "Find file" },
-  { "<leader>fd", "<cmd>DiffviewOpen HEAD -- %<cr>", desc = "File diff" },
+  { "<leader>ff", telescope.find_files, desc = "Find file" },
+  { "<leader>fd", cmd("DiffviewOpen HEAD -- %"), desc = "File diff" },
 
   { "<leader>b", group = "Buffers" },
-  { "<leader>bf", "<cmd>Telescope buffers<cr>", desc = "Find" },
-  { "<leader>bd", require("options.utils").buf_kill, desc = "Delete buffer" },
-  { "<leader>bh", "<cmd>BufferLineCloseLeft<cr>", desc = "Close all to the left" },
-  { "<leader>bl", "<cmd>BufferLineCloseRight<cr>", desc = "Close all to the right" },
-  { "<leader>bD", "<cmd>%bdelete<cr>", desc = "Delete all buffers" },
-  { "<leader>bw", "<cmd>w!<cr>", desc = "Save buffer" },
+  { "<leader>bb", telescope.buffers, desc = "Find" },
+  { "<leader>bd", utils.buf_kill, desc = "Delete buffer" },
+  { "<leader>bh", wo(bufferline.close_in_direction, "left"), desc = "Close all to the left" },
+  { "<leader>bl", wo(bufferline.close_in_direction, "right"), desc = "Close all to the right" },
+  { "<leader>bD", cmd("%bdelete"), desc = "Delete all buffers" },
+  { "<leader>bw", cmd("w!"), desc = "Save buffer" },
 
   { "<leader>g", group = "Git" },
   { "<leader>gg", "<cmd>Neogit<CR>", desc = "Git Screen" },
-  { "<leader>gb", require("gitsigns").blame_line, desc = "Blame" },
-  { "<leader>gR", require("gitsigns").reset_buffer, desc = "Reset Buffer" },
-  { "<leader>gd", "<cmd>DiffviewOpen<cr>", desc = "Git Diff" },
+  { "<leader>gb", gitsigns.blame_line, desc = "Blame" },
+  { "<leader>gR", gitsigns.reset_buffer, desc = "Reset Buffer" },
+  { "<leader>gd", diffview.open, desc = "Git Diff" },
 
   { "<leader>gh", group = "Git hunk" },
-  { "<leader>ghj", "<cmd>Gitsigns next_hunk<cr>", desc = "Next Hunk" },
-  { "<leader>ghk", "<cmd>Gitsigns prev_hunk<cr>", desc = "Prev Hunk" },
-  { "<leader>ghp", require("gitsigns").preview_hunk, desc = "Preview Hunk" },
-  { "<leader>ghr", require("gitsigns").reset_hunk, desc = "Reset Hunk" },
-  { "<leader>ghs", require("gitsigns").stage_hunk, desc = "Stage Hunk" },
-  { "<leader>ghu", require("gitsigns").undo_stage_hunk, desc = "Undo Stage Hunk" },
+  { "<leader>ghj", gitsigns.next_hunk, desc = "Next Hunk" },
+  { "<leader>ghk", gitsigns.prev_hunk, desc = "Prev Hunk" },
+  { "<leader>ghp", gitsigns.preview_hunk, desc = "Preview Hunk" },
+  { "<leader>ghr", gitsigns.reset_hunk, desc = "Reset Hunk" },
+  { "<leader>ghs", gitsigns.stage_hunk, desc = "Stage Hunk" },
+  { "<leader>ghu", gitsigns.undo_stage_hunk, desc = "Undo Stage Hunk" },
 
   { "<leader>l", group = "LSP" },
   { "<leader>la", vim.lsp.buf.code_action, desc = "Code Action" },
-  { "<leader>ld", "<cmd>Telescope diagnostics<cr>", desc = "Diagnostics" },
-  {
-    "<leader>le",
-    function()
-      require("telescope.builtin").diagnostics({ severity = vim.diagnostic.severity.ERROR })
-    end,
-    desc = "Diagnostics",
-  },
-
-  {
-    "<leader>lf",
-    function()
-      vim.lsp.buf.format({ async = true })
-    end,
-    desc = "Format",
-  },
-  { "<leader>li", "<cmd>LspInfo<cr>", desc = "Info" },
+  { "<leader>ld", telescope.diagnostics, desc = "Diagnostics" },
+  { "<leader>le", wo(telescope.diagnostics, { severity = vim.diagnostic.severity.ERROR }), desc = "Diagnostics" },
+  { "<leader>lf", wo(vim.lsp.buf.format, { async = true }), desc = "Format" },
+  { "<leader>li", cmd("LspInfo"), desc = "Info" },
   { "<leader>ll", vim.lsp.codelens.run, desc = "CodeLens Action" },
-  -- { "<leader>lL", require("lsp_lines").toggle, desc = "Toggle Lsp Lines" },
+  { "<leader>lL", utils.toggle_lsp_lines, desc = "Toggle Lsp Lines" },
   { "<leader>lr", vim.lsp.buf.rename, desc = "Rename" },
-  { "<leader>lR", "<cmd>LspRestart<cr>", desc = "Lsp Restart" },
-  { "<leader>ls", "<cmd>Telescope lsp_document_symbols<cr>", desc = "Document Symbols" },
-  { "<leader>lS", "<cmd>Telescope lsp_workspace_symbols<cr>", desc = "Workspace Symbols" },
-  { "<leader>ln", "<cmd>Navbuddy<cr>", desc = "NavBuddy" },
+  { "<leader>lR", cmd("LspRestart"), desc = "Lsp Restart" },
+  { "<leader>ls", telescope.lsp_document_symbols, desc = "Document Symbols" },
+  { "<leader>lS", telescope.lsp_workspace_symbols, desc = "Workspace Symbols" },
 
   { "<leader>lc", group = "Calls" },
-  { "<leader>lco", "<cmd>Telescope lsp_outgoing_calls<cr>", desc = "Outgoing calls" },
-  { "<leader>lci", "<cmd>Telescope lsp_incoming_calls<cr>", desc = "Incoming calls" },
+  { "<leader>lco", telescope.lsp_outgoing_calls, desc = "Outgoing calls" },
+  { "<leader>lci", telescope.lsp_incoming_calls, desc = "Incoming calls" },
 
   { "<leader>t", group = "Telescope" },
-  { "<leader>ta", "<cmd>Telescope builtin<cr>", desc = "Search all options" },
-  { "<leader>tg", "<cmd>Telescope live_grep<cr>", desc = "Find text" },
-  { "<leader>ts", "<cmd>Telescope grep_string<CR>", desc = "Find string under cursor" },
-  { "<leader>tt", "<cmd>Telescope resume<CR>", desc = "Resume previous search" },
+  { "<leader>ta", telescope.builtin, desc = "Search all options" },
+  { "<leader>tg", telescope.live_grep, desc = "Find text" },
+  { "<leader>ts", telescope.grep_string, desc = "Find string under cursor" },
+  { "<leader>tt", telescope.resume, desc = "Resume previous search" },
 
   { "<leader>tr", group = "Recession" },
-  { "<leader>trf", "<CMD>Telescope resession<CR>", desc = "Find Session" },
-  {
-    "<leader>trs",
-    function()
-      require("resession").save()
-    end,
-    desc = "Save Session",
-  },
+  { "<leader>trf", telescope_resession.resession, desc = "Find Session" },
+  { "<leader>trs", recession.save, desc = "Save Session" },
 
   { "<leader>x", group = "Trouble" },
-  { "<leader>xd", "<cmd>Trouble diagnostics toggle<cr>", desc = "Toggle Trouble diagnostics" },
-  { "<leader>xq", "<cmd>Trouble quickfix toggle<cr>", desc = "Toggle Trouble diagnostics" },
+  { "<leader>xd", wo(trouble.toggle, "diagnostics"), desc = "Toggle Trouble diagnostics" },
+  { "<leader>xq", wo(trouble.toggle, "quickfix"), desc = "Toggle Trouble diagnostics" },
 })

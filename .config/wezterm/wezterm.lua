@@ -118,4 +118,8 @@ wezterm.on("user-var-changed", function(window, pane, name, value)
   window:set_config_overrides(overrides)
 end)
 
+-- print the workspace name at the upper right
+wezterm.on("update-right-status", function(window, pane)
+  window:set_right_status(window:active_workspace())
+end)
 return config
