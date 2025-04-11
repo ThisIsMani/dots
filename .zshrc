@@ -49,7 +49,7 @@ eval "$(fnm env --use-on-cd)"
 eval "$(fzf --zsh)"
 
 nvim() {
-  if [[ $@ == "." ]]; then
+  if [[ -d "$1" ]]; then
     command fzf --multi --preview 'bat --color=always {}' --preview-window '~3' --bind 'enter:become(nvim {})' 
   else
     command nvim "$@"
