@@ -7,20 +7,27 @@ return {
     "MunifTanjim/nui.nvim",
     "nvim-tree/nvim-web-devicons",
     "zbirenbaum/copilot.lua",
+    "nvim-telescope/telescope.nvim",
+    "MeanderingProgrammer/render-markdown.nvim",
   },
-  build = "make BUILD_FROM_SOURCE=true",
+  build = "make",
   config = function()
     require("avante").setup({
+      hints = { enabled = false },
       provider = "copilot",
-      -- openai = {
-      --   model = " gpt-4o-2024-08-06",
-      -- },
+      copilot = {
+        model = "claude-3.7-sonnet-thought",
+      },
       behaviour = {
         auto_set_keymaps = false,
+        enable_cursor_planning_mode = true,
       },
       windows = {
         sidebar_header = {
-          rounded = false,
+          rounded = true,
+        },
+        ask = {
+          border = "rounded",
         },
       },
     })

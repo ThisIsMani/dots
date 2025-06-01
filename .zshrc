@@ -50,7 +50,7 @@ eval "$(fzf --zsh)"
 
 nvim() {
   if [[ -d "$1" ]]; then
-    command fzf --multi --preview 'bat --color=always {}' --preview-window '~3' --bind 'enter:become(nvim {})' 
+    command fzf --multi --preview 'bat --color=always {}' --preview-window '~3' --bind 'enter:become(nvim {})'
   else
     command nvim "$@"
   fi
@@ -63,7 +63,7 @@ alias l='ls -lah'
 alias ll='ls -lh'
 alias la='ls -lAh'
 
-alias zi='zoxide query --interactive'
+alias zi=__zoxide_zi
 
 zinit pack for ls_colors
 zinit pack"no-zsh-completion" for ls_colors
@@ -72,3 +72,11 @@ zinit pack"no-dir-color-swap" for ls_colors
 export LS_COLORS="di=1;36:ln=35:so=32:pi=33:ex=31:bd=34;46:cd=34;43:su=30;41:sg=30;46:tw=30;42:ow=30;43"
 
 export PATH="/opt/homebrew/bin:$HOME/go/bin:/usr/local/opt/openjdk@17/bin:$HOME/Library/Python/3.9/bin:$PATH"
+export HOMEBREW_CASK_OPTS="--appdir=$HOME/Applications --caskroom=/usr/local/Caskroom"
+export EDITOR='nvim'
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/mani.dchandra/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/mani.dchandra/Downloads/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/mani.dchandra/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/mani.dchandra/Downloads/google-cloud-sdk/completion.zsh.inc'; fi

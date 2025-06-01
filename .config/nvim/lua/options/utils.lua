@@ -106,14 +106,32 @@ function M.set_keymap(mode, key, action, desc, opts)
   vim.keymap.set(mode, key, action, opts)
 end
 
+function M.get_path()
+  return vim.fn.expand("%:p")
+end
+
+function M.print_path()
+  print(M.get_path())
+end
+
 function M.copy_path()
-  local path = vim.fn.expand("%:p")
-  vim.fn.setreg("+", path)
+  vim.fn.setreg("+", M.get_path())
 end
 
 function M.toggle_lsp_lines()
   local new_config = not vim.diagnostic.config().virtual_lines
   vim.diagnostic.config({ virtual_lines = new_config })
+end
+
+function M.toggle_inlay_hint()
+  local new_config = not vim.lsp.inlay_hint.is_enabled()
+  vim.lsp.inlay_hint.enable(new_config)
+end
+
+function M.with_opts(another_function, opts)
+  return function()
+    another_function(opts)
+  end
 end
 
 return M

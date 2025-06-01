@@ -12,12 +12,9 @@ local telescope_resession = require("telescope").extensions.resession
 local recession = require("resession")
 local trouble = require("trouble")
 local bufferline = require("bufferline")
+-- local avante = require("avante")
 
-local wo = function(another_function, opts)
-  return function()
-    another_function(opts)
-  end
-end
+local wo = require("options.utils").with_opts
 
 local cmd = function(command)
   return function()
@@ -26,6 +23,9 @@ local cmd = function(command)
 end
 
 which_key.add({
+  -- { "<leader>a", group = "Avante" },
+  -- { "<leader>aa", wo(avante.toggle, {}), desc = "Open Avante Chat" },
+
   { "<leader>c", group = "Copilot" },
   { "<leader>cc", copilot_chat.toggle, desc = "Open chat", mode = "v" },
   { "<leader>cm", copilot_chat.select_model, desc = "Select Copilot model" },
@@ -46,7 +46,8 @@ which_key.add({
   { "<leader>nq", cmd("qa"), desc = "Quit Neovim" },
 
   { "<leader>nu", group = "Neovim utils" },
-  { "<leader>nup", utils.copy_path, desc = "Copy file path" },
+  { "<leader>nuy", utils.copy_path, desc = "Copy file path" },
+  { "<leader>nup", utils.print_path, desc = "Print file path" },
 
   { "<leader>f", group = "File" },
   { "<leader>ff", telescope.find_files, desc = "Find file" },
@@ -59,6 +60,7 @@ which_key.add({
   { "<leader>bl", wo(bufferline.close_in_direction, "right"), desc = "Close all to the right" },
   { "<leader>bD", cmd("%bdelete"), desc = "Delete all buffers" },
   { "<leader>bw", cmd("w!"), desc = "Save buffer" },
+  { "<leader>bW", cmd("noa w!"), desc = "Save buffer without autocmds" },
 
   { "<leader>g", group = "Git" },
   { "<leader>gg", "<cmd>Neogit<CR>", desc = "Git Screen" },
@@ -80,6 +82,7 @@ which_key.add({
   { "<leader>le", wo(telescope.diagnostics, { severity = vim.diagnostic.severity.ERROR }), desc = "Diagnostics" },
   { "<leader>lf", wo(vim.lsp.buf.format, { async = true }), desc = "Format" },
   { "<leader>li", cmd("LspInfo"), desc = "Info" },
+  { "<leader>lI", utils.toggle_inlay_hint, desc = "Toggle Inlay Hints" },
   { "<leader>ll", vim.lsp.codelens.run, desc = "CodeLens Action" },
   { "<leader>lL", utils.toggle_lsp_lines, desc = "Toggle Lsp Lines" },
   { "<leader>lr", vim.lsp.buf.rename, desc = "Rename" },

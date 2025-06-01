@@ -1,3 +1,5 @@
+local telescope = require("telescope.builtin")
+
 local M = {}
 
 local function setup_document_highlight(client, bufnr)
@@ -63,11 +65,11 @@ end
 function M.common_on_attach(client, bufnr)
   local opts = { buffer = bufnr, silent = true }
   local set = vim.keymap.set
-  set("n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts)
-  set("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
-  set("n", "gI", "<cmd>Telescope lsp_implementations<CR>", opts)
-  set("n", "gr", "<cmd>Telescope lsp_references<CR>", opts)
-  set("n", "gl", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
+  set("n", "gd", telescope.lsp_definitions, opts)
+  set("n", "K", vim.lsp.buf.hover, opts)
+  set("n", "gI", telescope.lsp_implementations, opts)
+  set("n", "gr", telescope.lsp_references, opts)
+  set("n", "gl", vim.diagnostic.open_float, opts)
   setup_document_highlight(client, bufnr)
   setup_codelens_refresh(client, bufnr)
   -- vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")

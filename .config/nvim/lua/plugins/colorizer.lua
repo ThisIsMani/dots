@@ -1,7 +1,15 @@
+-- return {
+--   "norcalli/nvim-colorizer.lua",
+--   config = function()
+--     require("colorizer").setup()
+--   end,
+--   event = "VeryLazy",
+-- }
+
 return {
-  "norcalli/nvim-colorizer.lua",
+  "brenoprata10/nvim-highlight-colors",
   config = function()
-    require("colorizer").setup()
+    require("nvim-highlight-colors").setup({})
   end,
   event = "VeryLazy",
 }

@@ -17,9 +17,6 @@ local function scheme_for_appearance(appearance)
   end
 end
 
--- local colors, metadata = wezterm.color.load_scheme("./colors/onedark.yaml")
--- print(colors)
-
 config.font = wezterm.font("JetBrainsMono Nerd Font Mono", { weight = "Regular" })
 config.harfbuzz_features = {
   "calt",
@@ -49,52 +46,54 @@ config.colors = {
   },
 }
 
-config.use_fancy_tab_bar = false
-config.tab_bar_at_bottom = true
-config.show_new_tab_button_in_tab_bar = false
-config.leader = { key = "'", mods = "CMD", timeout_milliseconds = 1000 }
-config.keys = require("keys")
-config.tab_max_width = 24
+config.enable_tab_bar = false
+-- config.use_fancy_tab_bar = false
+-- config.tab_bar_at_bottom = true
+-- config.show_new_tab_button_in_tab_bar = false
+-- config.leader = { key = "'", mods = "CMD", timeout_milliseconds = 1000 }
+-- config.keys = require("keys")
+-- config.tab_max_width = 24
 config.native_macos_fullscreen_mode = true
+config.enable_kitty_keyboard = true
 
-wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_width)
-  local edge_background = colors.background
-  local edge_foreground = colors.foreground
-  local background = colors.background
-  local foreground = colors.foreground
-
-  if tab.is_active or hover then
-    background = colors.foreground
-    foreground = colors.background
-  elseif hover then
-    background = colors.brights[1]
-    foreground = colors.brights[8]
-  end
-
-  local function tab_title(tab_info)
-    local title = tab_info.tab_title
-    if title and #title > 0 then
-      return title
-    end
-    return tab_info.active_pane.title
-  end
-
-  local title = tab_title(tab)
-
-  title = wezterm.truncate_right(title, max_width - 5)
-
-  return {
-    { Background = { Color = edge_background } },
-    { Foreground = { Color = edge_foreground } },
-    { Text = (tab.is_active or hover) and " " or "  " },
-    { Background = { Color = background } },
-    { Foreground = { Color = foreground } },
-    { Text = " " .. title .. " " },
-    { Background = { Color = edge_background } },
-    { Foreground = { Color = edge_foreground } },
-    { Text = (tab.is_active or hover) and "" or " " },
-  }
-end)
+-- wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_width)
+--   local edge_background = colors.background
+--   local edge_foreground = colors.foreground
+--   local background = colors.background
+--   local foreground = colors.foreground
+--
+--   if tab.is_active or hover then
+--     background = colors.foreground
+--     foreground = colors.background
+--   elseif hover then
+--     background = colors.brights[1]
+--     foreground = colors.brights[8]
+--   end
+--
+--   local function tab_title(tab_info)
+--     local title = tab_info.tab_title
+--     if title and #title > 0 then
+--       return title
+--     end
+--     return tab_info.active_pane.title
+--   end
+--
+--   local title = tab_title(tab)
+--
+--   title = wezterm.truncate_right(title, max_width - 5)
+--
+--   return {
+--     { Background = { Color = edge_background } },
+--     { Foreground = { Color = edge_foreground } },
+--     { Text = (tab.is_active or hover) and " " or "  " },
+--     { Background = { Color = background } },
+--     { Foreground = { Color = foreground } },
+--     { Text = " " .. title .. " " },
+--     { Background = { Color = edge_background } },
+--     { Foreground = { Color = edge_foreground } },
+--     { Text = (tab.is_active or hover) and "" or " " },
+--   }
+-- end)
 
 wezterm.on("user-var-changed", function(window, pane, name, value)
   local overrides = window:get_config_overrides() or {}
@@ -118,8 +117,13 @@ wezterm.on("user-var-changed", function(window, pane, name, value)
   window:set_config_overrides(overrides)
 end)
 
+config.keys = {
+  -- Remove the built-in “copy” binding so the key is forwarded
+  { key = "c", mods = "CMD", action = wezterm.action.DisableDefaultAssignment },
+}
+
 -- print the workspace name at the upper right
-wezterm.on("update-right-status", function(window, pane)
-  window:set_right_status(window:active_workspace())
-end)
+-- wezterm.on("update-right-status", function(window, pane)
+--   window:set_right_status(window:active_workspace())
+-- end)
 return config
