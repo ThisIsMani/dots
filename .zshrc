@@ -81,7 +81,7 @@ zinit pack"no-dir-color-swap" for ls_colors
 
 export LS_COLORS="di=1;36:ln=35:so=32:pi=33:ex=31:bd=34;46:cd=34;43:su=30;41:sg=30;46:tw=30;42:ow=30;43"
 
-export PATH="/opt/homebrew/bin:$HOME/go/bin:$HOME/.cargo/bin:/usr/local/opt/openjdk@17/bin:$HOME/Library/Python/3.9/bin:$PATH"
+export PATH="/opt/homebrew/bin:$HOME/go/bin:$HOME/.cargo/bin:$HOME/.local/bin:/usr/local/opt/openjdk@17/bin:$HOME/Library/Python/3.9/bin:$PATH"
 export HOMEBREW_CASK_OPTS="--appdir=$HOME/Applications --caskroom=/usr/local/Caskroom"
 export EDITOR='nvim'
 
