@@ -43,10 +43,20 @@ setopt hist_save_no_dups
 setopt hist_ignore_dups
 setopt hist_find_no_dups
 
-eval "$(zoxide init zsh)"
-eval "$(thefuck --alias)"
-eval "$(fnm env --use-on-cd)"
-eval "$(fzf --zsh)"
+# Function to conditionally initialize tools
+init_if_exists() {
+  local cmd=$1
+  shift
+  if command -v "$cmd" &> /dev/null; then
+    eval "$("$cmd" "$@")"
+  fi
+}
+
+# Initialize tools if they exist
+init_if_exists zoxide init zsh
+init_if_exists thefuck --alias
+init_if_exists fnm env --use-on-cd
+init_if_exists fzf --zsh
 
 nvim() {
   if [[ -d "$1" ]]; then
