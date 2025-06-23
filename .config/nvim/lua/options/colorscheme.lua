@@ -69,6 +69,7 @@ local function get_theme_overrides(style)
     LspReferenceRead = { bg = "$bg3" },
     LspReferenceWrite = { bg = "$bg3" },
     CopilotSuggestion = { fg = "$grey" },
+    WinSeparator = { fg = "$bg1", bg = "$bg1" },
   }
   return M
 end
@@ -94,8 +95,7 @@ onedark.setup({
   toggle_style_list = { "dark", "light" },
 })
 
-local dark_notify = require("dark_notify")
-dark_notify.run({
+local theme_switcher = require("theme-switcher")
+theme_switcher.setup({
   onchange = update_theme,
 })
-dark_notify.update()

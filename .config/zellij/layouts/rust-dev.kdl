@@ -1,0 +1,31 @@
+layout {
+    // Main content area
+    pane split_direction="vertical" {
+        pane
+        pane split_direction="horizontal" {
+            pane stacked=true {
+                pane name="check" focus=true {
+                    command "cargo"
+                    args "check"
+                    start_suspended true
+                }
+                pane name="test" {
+                    command "cargo"
+                    args "test"
+                    start_suspended true
+                }
+                pane name="run" {
+                    command "cargo"
+                    args "run"
+                    start_suspended true
+                }
+            }
+            pane name="claude" {
+                command "claude"
+            }
+        }
+    }
+    pane size=1 borderless=true {
+        plugin location="compact-bar"
+    }
+}

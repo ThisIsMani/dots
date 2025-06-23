@@ -17,10 +17,10 @@ set("v", ">", ">gv", "Indent right")
 set("v", "p", '"_dP', "Paste without yanking")
 
 -- Basic movement keybinds, these make navigating splits easy for me
-set("n", "<c-j>", ":FocusSplitDown<CR>", "Go to below split")
-set("n", "<c-k>", ":FocusSplitUp<CR>", "Go to above split")
-set("n", "<c-l>", ":FocusSplitRight<CR>", "Go to right split")
-set("n", "<c-h>", ":FocusSplitLeft<CR>", "Go to left split")
+set("n", "<M-j>", ":ZellijSplitDown<CR>", "Go to below split")
+set("n", "<M-k>", ":ZellijSplitUp<CR>", "Go to above split")
+set("n", "<M-l>", ":ZellijSplitRight<CR>", "Go to right split")
+set("n", "<M-h>", ":ZellijSplitLeft<CR>", "Go to left split")
 
 -- These mappings control the size of splits (height/width)
 set("n", "<c-,>", "<c-w>5<", "Decrease split size")

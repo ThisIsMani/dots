@@ -80,3 +80,5 @@ if [ -f '/Users/mani.dchandra/Downloads/google-cloud-sdk/path.zsh.inc' ]; then .
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/Users/mani.dchandra/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/mani.dchandra/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
+
+alias claude="/Users/mani.dchandra/.claude/local/claude"

@@ -27,6 +27,11 @@ return {
               ["async-recursion"] = { "async_recursion" },
             },
           },
+          check = {
+            enable = true,
+            command = "clippy",
+            features = "all",
+          },
         },
       },
     },

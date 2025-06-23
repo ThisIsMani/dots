@@ -1,0 +1,9 @@
+[general]
+ipc = true
+quiet = true
+
+[scripts]
+any = [
+    "~/.config/theme-switcher/zellij_theme.sh",
+    "~/.config/theme-switcher/claude_code_theme.sh",
+]

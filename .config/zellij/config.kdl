@@ -1,5 +1,5 @@
 // If you'd like to override the default keybindings completely, be sure to change "keybinds" to "keybinds clear-defaults=true"
-keybinds {
+keybinds clear-defaults=true {
     normal {
         bind "Super c" { Copy; }
     }
@@ -167,6 +167,7 @@ keybinds {
     shared_except "locked" {
         bind "Ctrl g" { SwitchToMode "Locked"; }
         bind "Ctrl q" { Quit; }
+        bind "Alt q" { CloseFocus; }
         bind "Alt f" { ToggleFloatingPanes; }
         bind "Alt n" { NewPane; }
         bind "Alt i" { MoveTab "Left"; }
@@ -179,6 +180,16 @@ keybinds {
         bind "Alt -" { Resize "Decrease"; }
         bind "Alt [" { PreviousSwapLayout; }
         bind "Alt ]" { NextSwapLayout; }
+        bind "Ctrl q" {
+          LaunchOrFocusPlugin "zj-quit" {
+            floating true
+          }
+        }
+        bind "Ctrl y" {
+            LaunchOrFocusPlugin "zellij-forgot" {
+                floating true
+            }
+        }
     }
     shared_except "normal" "locked" {
         bind "Enter" "Esc" { SwitchToMode "Normal"; }
@@ -223,12 +234,16 @@ plugins {
     configuration location="zellij:configuration"
     plugin-manager location="zellij:plugin-manager"
     about location="zellij:about"
+    zj-quit location="https://github.com/cristiand391/zj-quit/releases/download/0.3.1/zj-quit.wasm"
+    zellij-forgot location="https://github.com/karimould/zellij-forgot/releases/download/0.4.2/zellij_forgot.wasm"
+    // zellij-autolock location="https://github.com/fresh2dev/zellij-autolock/releases/download/0.2.2/zellij-autolock.wasm"
 }
 
 // Plugins to load in the background when a new session starts
 load_plugins {
-  // "file:/path/to/my-plugin.wasm"
-  // "https://example.com/my-plugin.wasm"
+    "https://github.com/cristiand391/zj-quit/releases/download/0.3.1/zj-quit.wasm"
+    "https://github.com/karimould/zellij-forgot/releases/download/0.4.2/zellij_forgot.wasm"
+    // "https://github.com/fresh2dev/zellij-autolock/releases/download/0.2.2/zellij-autolock.wasm"
 }
 
 // Choose what to do when zellij receives SIGTERM, SIGINT, SIGQUIT or SIGHUP
@@ -316,13 +331,13 @@ load_plugins {
 // Choose the theme that is specified in the themes section.
 // Default: default
 //
-theme "atom-one-dark"
+theme "atom-one-light"
 
 // The name of the default layout to load on startup
 // Default: "default"
 // (Requires restart)
 //
-// default_layout "compact"
+default_layout "compact"
 
 // Choose the mode that zellij uses when starting up.
 // Default: normal
@@ -388,12 +403,12 @@ copy_on_select false
 // The folder in which Zellij will look for layouts
 // (Requires restart)
 //
-// layout_dir "/path/to/my/layout_dir"
+layout_dir "/Users/mani.dchandra/.config/zellij/layouts"
 
 // The folder in which Zellij will look for themes
 // (Requires restart)
 //
-theme_dir "/Users/mani.dchandra/dots/.config/zellij/themes"
+theme_dir "/Users/mani.dchandra/.config/zellij/themes"
 
 // Enable or disable the rendering of styled and colored underlines (undercurl).
 // May need to be disabled for certain unsupported terminals

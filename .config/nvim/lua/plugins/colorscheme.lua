@@ -1,7 +1,7 @@
 return {
   "navarasu/onedark.nvim",
   dependencies = {
-    "cormacrelf/dark-notify",
+    "ThisIsMani/theme-switcher",
   },
   config = function()
     -- require("onedark").setup({
