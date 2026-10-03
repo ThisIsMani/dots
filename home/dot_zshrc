@@ -1,0 +1,98 @@
+# Powerlevel10k instant prompt must stay near the top of this file.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+# Install zinit on first use, then use it to manage interactive shell plugins.
+ZINIT_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/zinit/zinit.git"
+if [[ ! -d "$ZINIT_HOME/.git" ]]; then
+  mkdir -p "${ZINIT_HOME:h}"
+  command git clone --depth=1 https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+fi
+
+if [[ -r "$ZINIT_HOME/zinit.zsh" ]]; then
+  source "$ZINIT_HOME/zinit.zsh"
+
+  zinit ice depth=1
+  zinit light romkatv/powerlevel10k
+
+  # zsh-vi-mode reads this during initialization.
+  ZVM_VI_INSERT_ESCAPE_BINDKEY=jj
+  zinit light jeffreytse/zsh-vi-mode
+  zinit light zsh-users/zsh-autosuggestions
+
+  # Syntax highlighting should be loaded after other plugins.
+  zinit light zsh-users/zsh-syntax-highlighting
+
+  zinit pack for ls_colors
+  zinit pack"no-zsh-completion" for ls_colors
+  zinit pack"no-dir-color-swap" for ls_colors
+fi
+
+[[ -r "$HOME/.p10k.zsh" ]] && source "$HOME/.p10k.zsh"
+
+bindkey '^[[A' history-search-backward
+bindkey '^[[B' history-search-forward
+bindkey -M viins '^[[A' history-search-backward
+bindkey -M viins '^[[B' history-search-forward
+
+HISTSIZE=5000
+SAVEHIST=$HISTSIZE
+HISTFILE="$HOME/.zsh_history"
+
+setopt append_history
+setopt share_history
+setopt hist_ignore_space
+setopt hist_ignore_all_dups
+setopt hist_save_no_dups
+setopt hist_find_no_dups
+
+# Initialize optional tools only when installed.
+init_if_exists() {
+  local command_name=$1 initialization
+  shift
+  (( $+commands[$command_name] )) || return 0
+
+  if ! initialization=$(command "$command_name" "$@"); then
+    print -u2 -- "zsh: failed to initialize $command_name"
+    return 1
+  fi
+  eval "$initialization"
+}
+
+init_if_exists zoxide init zsh
+init_if_exists thefuck --alias
+init_if_exists fnm env --use-on-cd
+init_if_exists fzf --zsh
+
+# When given a directory, select a file from it before opening Neovim.
+nvim() {
+  if (( $# == 1 )) && [[ -d "$1" ]] && (( $+commands[fzf] )); then
+    (
+      cd -- "$1" || return
+      command fzf --multi \
+        --preview 'bat --color=always {} 2>/dev/null || sed -n "1,200p" {}' \
+        --preview-window '~3' \
+        --bind 'enter:become(nvim {})'
+    )
+  else
+    command nvim "$@"
+  fi
+}
+
+if command ls --color=auto / >/dev/null 2>&1; then
+  alias ls='ls --color=auto'
+else
+  alias ls='ls -G'
+fi
+alias l='ls -lah'
+alias la='ls -lAh'
+alias ll='ls -lh'
+alias lsa='ls -lah'
+(( $+functions[__zoxide_zi] )) && alias zi='__zoxide_zi'
+
+export LS_COLORS='di=1;36:ln=35:so=32:pi=33:ex=31:bd=34;46:cd=34;43:su=30;41:sg=30;46:tw=30;42:ow=30;43'
+
+if [[ -r /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]]; then
+  source /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+fi

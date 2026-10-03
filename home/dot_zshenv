@@ -1,0 +1,23 @@
+# Environment shared by interactive and non-interactive zsh processes.
+# Keep this file fast: no subprocesses, network access, or plugin initialization.
+
+export EDITOR="${EDITOR:-nvim}"
+export VISUAL="${VISUAL:-$EDITOR}"
+
+export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
+export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
+export XDG_STATE_HOME="${XDG_STATE_HOME:-$HOME/.local/state}"
+
+export BUN_INSTALL="${BUN_INSTALL:-$HOME/.bun}"
+
+typeset -U path PATH
+path=(
+  "$HOME/.local/bin"
+  "$HOME/.opencode/bin"
+  "$BUN_INSTALL/bin"
+  "$HOME/.cargo/bin"
+  "$HOME/go/bin"
+  $path
+)
+export PATH

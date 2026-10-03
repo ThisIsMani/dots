@@ -1,0 +1,35 @@
+# Login-shell setup. Interactive configuration belongs in ~/.zshrc.
+
+{{- if eq .chezmoi.os "darwin" }}
+# Homebrew uses /opt/homebrew on Apple Silicon and /usr/local on Intel Macs.
+brew_prefix=
+if [[ -x /opt/homebrew/bin/brew ]]; then
+  brew_prefix=/opt/homebrew
+elif [[ -x /usr/local/bin/brew ]]; then
+  brew_prefix=/usr/local
+fi
+
+if [[ -n "$brew_prefix" ]]; then
+  eval "$("$brew_prefix/bin/brew" shellenv)"
+
+  # Add binaries from keg-only Homebrew packages when installed.
+  for dir in \
+    "$brew_prefix/opt/ruby/bin" \
+    "$brew_prefix/opt/postgresql@17/bin" \
+    "$brew_prefix/opt/libpq/bin" \
+    "$brew_prefix/opt/openjdk@17/bin"; do
+    [[ -d "$dir" ]] && path=("$dir" $path)
+  done
+fi
+unset brew_prefix
+{{- end }}
+
+# Support the standard SDK locations on both macOS and Linux.
+for sdk_dir in "$HOME/google-cloud-sdk" "$HOME/.local/share/google-cloud-sdk"; do
+  [[ -r "$sdk_dir/path.zsh.inc" ]] && source "$sdk_dir/path.zsh.inc"
+  [[ -r "$sdk_dir/completion.zsh.inc" ]] && source "$sdk_dir/completion.zsh.inc"
+  [[ -r "$sdk_dir/path.zsh.inc" || -r "$sdk_dir/completion.zsh.inc" ]] && break
+done
+unset sdk_dir
+
+export PATH
