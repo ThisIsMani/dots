@@ -21,3 +21,9 @@ path=(
   $path
 )
 export PATH
+
+# SSH commands start a non-interactive zsh and only read ~/.zshenv. Load Nix
+# here so commands such as `ssh host nix-instantiate ...` can find Nix.
+if [[ -r /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]]; then
+  source /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+fi
