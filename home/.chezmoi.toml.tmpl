@@ -1,0 +1,5 @@
+{{- $machineName := promptStringOnce . "machineName" "Machine display name" -}}
+sourceDir = {{ .chezmoi.workingTree | quote }}
+
+[data]
+machineName = {{ $machineName | quote }}
