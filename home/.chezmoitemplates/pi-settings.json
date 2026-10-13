@@ -1,0 +1,53 @@
+{
+  "defaultProvider": "xyne-box",
+  "defaultModel": "gpt-6.1-sol",
+  "defaultThinkingLevel": "medium",
+  "packages": [
+    "npm:pi-web-access",
+    "npm:pi-prompt-template-model",
+    "npm:@marckrenn/pi-sub-bar",
+    "npm:pi-vim",
+    "npm:pi-messenger",
+    "npm:pi-subagents",
+    "npm:pi-extmgr",
+    "npm:@vanillagreen/pi-background-tasks",
+    "npm:pi-btw",
+    "npm:pi-token-speed",
+    "npm:pi-notify",
+    "npm:@diegopetrucci/pi-openai-fast",
+    "npm:pi-intercom",
+    "npm:@luxusai/pi-hindsight",
+    "npm:@quintinshaw/pi-dynamic-workflows",
+    "npm:pi-codex-accounts"
+  ],
+  "steeringMode": "all",
+  "subagents": {
+    "disableBuiltins": true
+  },
+  "compaction": {
+    "enabled": true,
+    "reserveTokens": 24576,
+    "keepRecentTokens": 24000
+  },
+  "treeFilterMode": "default",
+  "doubleEscapeAction": "tree",
+  "enableInstallTelemetry": true,
+  "quietStartup": false,
+  "httpIdleTimeoutMs": 600000,
+  "websocketConnectTimeoutMs": 30000,
+  "retry": {
+    "enabled": true,
+    "maxRetries": 5,
+    "baseDelayMs": 2000,
+    "provider": {
+      "timeoutMs": 600000,
+      "maxRetries": 0,
+      "maxRetryDelayMs": 60000
+    }
+  },
+  "transport": "sse",
+  "followUpMode": "one-at-a-time",
+  "hideThinkingBlock": false,
+  "outputPad": 0,
+  "tuiMode": "regular"
+}

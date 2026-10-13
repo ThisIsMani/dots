@@ -1,0 +1,13 @@
+{{- /* chezmoi:modify-template */ -}}
+{{- /* Set shared preferences while preserving local theme, changelog, and unknown fields. */ -}}
+{{- $settings := mustFromJson (default "{}" .chezmoi.stdin) -}}
+{{- $before := $settings | toJson -}}
+{{- $shared := include ".chezmoitemplates/pi-settings.json" | mustFromJson -}}
+{{- range $key, $value := $shared -}}
+{{- $_ := set $settings $key $value -}}
+{{- end -}}
+{{- if eq $before ($settings | toJson) -}}
+{{ .chezmoi.stdin }}
+{{- else -}}
+{{ printf "%s\n" ($settings | toPrettyJson) }}
+{{- end -}}

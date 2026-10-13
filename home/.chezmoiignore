@@ -1,0 +1,34 @@
+# Pi authentication and device-local trust must never be managed.
+.pi/agent/auth.json*
+.pi/agent/codex-accounts.json*
+.pi/agent/trust.json
+
+# Installed packages, generated instructions, integration files, and runtime state.
+.pi/agent/npm/**
+.pi/agent/git/**
+.pi/agent/APPEND_SYSTEM.md
+.pi/agent/extensions/**
+.pi/agent/sessions/**
+.pi/agent/cache/**
+.pi/agent/.extmgr-cache/**
+.pi/agent/models-store.json
+.pi/agent/run-history.jsonl
+.pi/agent/intercom/**
+.pi/agent/messenger/**
+.pi/agent/missions/**
+.pi/agent/memory/**
+.pi/agent/kendex/**
+.pi/agent/vstack/**
+.pi/agent/skill-workspaces/**
+.pi/agent/pi-subagents/**
+.pi/agent/.pi/**
+.pi/hindsight/**
+
+# Backups, logs, and installer receipts.
+.pi/agent/*.bak*
+.pi/agent/*.log
+.pi/agent/agency-global-backups/**
+.pi/agent/agency-global-source.json
+.pi/agent/skills.bak/**
+.agents/.skill-lock.json
+**/.DS_Store
