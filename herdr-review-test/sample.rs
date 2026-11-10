@@ -15,11 +15,19 @@ impl Cache {
         self.items.get(key)
     }
 
+    /// Inserts a value, evicting an arbitrary entry when full.
     pub fn put(&mut self, key: String, value: String) {
         if self.items.len() >= self.limit {
-            return;
+            let first = self.items.keys().next().cloned();
+            if let Some(k) = first {
+                self.items.remove(&k);
+            }
         }
         self.items.insert(key, value);
+    }
+
+    pub fn clear(&mut self) {
+        self.items = HashMap::new();
     }
 
     pub fn len(&self) -> usize {
@@ -31,5 +39,6 @@ fn main() {
     let mut cache = Cache::new(2);
     cache.put("a".into(), "1".into());
     cache.put("b".into(), "2".into());
-    println!("{}", cache.len());
+    cache.put("c".into(), "3".into());
+    println!("len = {}", cache.len());
 }
