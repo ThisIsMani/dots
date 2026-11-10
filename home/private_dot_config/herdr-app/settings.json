@@ -1,0 +1,15 @@
+{
+  "zoom": 0.9,
+  "sounds": {
+    "enabled": true
+  },
+  "font": "JetBrainsMono Custom",
+  "font_size": 15.0,
+  "font_ligatures": false,
+  "ui_font": "JetBrainsMono Custom",
+  "minimum_contrast": 1.0,
+  "theme": {
+    "light": "one-light",
+    "dark": "one-dark"
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "id": "root",
+  "type": "column",
+  "titlebar": "none",
+  "traffic_lights": [
+    18,
+    23
+  ],
+  "background": "canvas",
+  "padding": [
+    4,
+    6
+  ],
+  "gap": 8,
+  "floating": [
+    {
+      "id": "zellij-nav",
+      "content": {
+        "mod": "zellij-nav"
+      },
+      "edge": "bottom",
+      "align": "end"
+    }
+  ],
+  "children": [
+    {
+      "id": "main",
+      "type": "block",
+      "content": {
+        "tab": "active",
+        "pane": {
+          "header": {
+            "content": {
+              "mod": "mine-pane"
+            },
+            "height": 38
+          },
+          "background": "background",
+          "border": {
+            "width": 1,
+            "color": "border"
+          },
+          "focus": {
+            "width": 1,
+            "color": "accent"
+          },
+          "radius": 12,
+          "gap": 8,
+          "lone": true
+        }
+      }
+    },
+    {
+      "id": "tabs",
+      "type": "block",
+      "size": {
+        "px": 32
+      },
+      "window_drag": true,
+      "content": {
+        "mod": "mine-bar"
+      }
+    }
+  ]
+}
