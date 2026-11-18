@@ -120,6 +120,16 @@ end)
 config.keys = {
   -- Remove the built-in “copy” binding so the key is forwarded
   { key = "c", mods = "CMD", action = wezterm.action.DisableDefaultAssignment },
+  { key = "1", mods = "CMD", action = wezterm.action.DisableDefaultAssignment },
+  { key = "2", mods = "CMD", action = wezterm.action.DisableDefaultAssignment },
+  { key = "3", mods = "CMD", action = wezterm.action.DisableDefaultAssignment },
+  { key = "4", mods = "CMD", action = wezterm.action.DisableDefaultAssignment },
+  { key = "5", mods = "CMD", action = wezterm.action.DisableDefaultAssignment },
+  { key = "6", mods = "CMD", action = wezterm.action.DisableDefaultAssignment },
+  { key = "7", mods = "CMD", action = wezterm.action.DisableDefaultAssignment },
+  { key = "8", mods = "CMD", action = wezterm.action.DisableDefaultAssignment },
+  { key = "9", mods = "CMD", action = wezterm.action.DisableDefaultAssignment },
+  -- { key = "Enter", mods = "SHIFT", action = wezterm.action({ SendString = "\x1b\r" }) },
 }
 
 -- print the workspace name at the upper right
