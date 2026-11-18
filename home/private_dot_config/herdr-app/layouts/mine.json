@@ -20,6 +20,22 @@
       },
       "edge": "bottom",
       "align": "end"
+    },
+    {
+      "id": "agent-notify",
+      "content": {
+        "mod": "agent-notify"
+      },
+      "edge": "bottom",
+      "align": "start"
+    },
+    {
+      "id": "agent-reader",
+      "content": {
+        "mod": "agent-reader"
+      },
+      "edge": "bottom",
+      "align": "center"
     }
   ],
   "children": [
@@ -37,29 +53,48 @@
           },
           "background": "background",
           "border": {
-            "width": 1,
-            "color": "border"
+            "width": 1.5,
+            "color": "background"
           },
           "focus": {
-            "width": 1,
+            "width": 1.5,
             "color": "accent"
           },
-          "radius": 12,
-          "gap": 8,
+          "radius": 14,
+          "gap": 10,
           "lone": true
         }
       }
     },
     {
-      "id": "tabs",
-      "type": "block",
+      "id": "bottom",
+      "type": "row",
       "size": {
         "px": 32
       },
-      "window_drag": true,
-      "content": {
-        "mod": "mine-bar"
-      }
+      "gap": 8,
+      "resizable": false,
+      "children": [
+        {
+          "id": "tabs",
+          "type": "block",
+          "window_drag": true,
+          "content": {
+            "mod": "mine-bar"
+          }
+        },
+        {
+          "id": "ram",
+          "type": "block",
+          "size": {
+            "px": 96
+          },
+          "window_drag": true,
+          "content": {
+            "mod": "mine-ram"
+          }
+        }
+      ]
     }
   ]
 }

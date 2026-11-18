@@ -57,9 +57,18 @@
     "ctrl-7": "space.select:7",
     "ctrl-8": "space.select:8",
     "ctrl-9": "space.select:9",
+    "alt-shift-1": "space.select:1",
+    "alt-shift-2": "space.select:2",
+    "alt-shift-3": "space.select:3",
+    "alt-shift-4": "space.select:4",
+    "alt-shift-5": "space.select:5",
+    "alt-shift-6": "space.select:6",
+    "alt-shift-7": "space.select:7",
+    "alt-shift-8": "space.select:8",
+    "alt-shift-9": "space.select:9",
     "alt-h": "zellij-nav.left",
-    "alt-j": "pane.go:down",
-    "alt-k": "pane.go:up",
+    "alt-j": "zellij-nav.down",
+    "alt-k": "zellij-nav.up",
     "alt-l": "zellij-nav.right",
     "alt-n": "zellij-nav.new",
     "alt-;": "pane.zoom",
@@ -67,7 +76,9 @@
     "alt-o": "zellij-nav.tab-right",
     "alt-shift-h": "space.prev",
     "alt-shift-l": "space.next",
-    "alt-'": "mod.open:agent-finder"
+    "alt-'": "mod.open:agent-finder",
+    "cmd-shift-2": "mine-pane.shot",
+    "cmd-shift-f": "mod.open:redline"
   },
   "terminal": {
     "cmd-f": "terminal.search",
@@ -80,5 +91,15 @@
     "cmd-left": "send:\u0001",
     "cmd-right": "send:\u0005",
     "cmd-backspace": "send:\u0015"
+  },
+  "layout:mine": {
+    "cmd-shift-r": {
+      "command": "tab.new",
+      "args": {
+        "mod": "review",
+        "name": "Review"
+      }
+    },
+    "alt-r": "agent-reader.toggle"
   }
 }

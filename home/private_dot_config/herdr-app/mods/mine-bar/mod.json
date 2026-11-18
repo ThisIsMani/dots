@@ -4,5 +4,9 @@
   "cloned_from": {
     "name": "terminals-bar",
     "version": "0.1.14"
+  },
+  "overlay": {
+    "width": 440,
+    "height": 240
   }
 }
