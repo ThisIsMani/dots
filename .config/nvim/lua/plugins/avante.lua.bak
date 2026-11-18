@@ -6,7 +6,7 @@ return {
     "nvim-lua/plenary.nvim",
     "MunifTanjim/nui.nvim",
     "nvim-tree/nvim-web-devicons",
-    "zbirenbaum/copilot.lua",
+    -- "zbirenbaum/copilot.lua",
     "nvim-telescope/telescope.nvim",
     "MeanderingProgrammer/render-markdown.nvim",
   },
@@ -14,20 +14,45 @@ return {
   config = function()
     require("avante").setup({
       hints = { enabled = false },
-      provider = "copilot",
-      copilot = {
-        model = "claude-3.7-sonnet-thought",
+      --   provider = "copilot",
+      --   copilot = {
+      --     model = "claude-3.7-sonnet-thought",
+      --   },
+      --   behaviour = {
+      --     auto_set_keymaps = false,
+      --     enable_cursor_planning_mode = true,
+      --   },
+      --   windows = {
+      --     sidebar_header = {
+      --       rounded = true,
+      --     },
+      --     ask = {
+      --       border = "rounded",
+      --     },
+      --   },
+      provider = "claude",
+      auto_suggestions_provider = "claude",
+      providers = {
+        claude = {
+          endpoint = "https://grid.ai.juspay.net",
+          model = "claude-sonnet-4-5",
+          extra_request_body = {
+            temperature = 0.75,
+            max_tokens = 4096,
+          },
+        },
       },
       behaviour = {
+        auto_suggestions = true,
         auto_set_keymaps = false,
-        enable_cursor_planning_mode = true,
       },
-      windows = {
-        sidebar_header = {
-          rounded = true,
-        },
-        ask = {
-          border = "rounded",
+      acp_providers = {
+        ["claude-code"] = {
+          command = "npx",
+          args = { "@zed-industries/claude-code-acp" },
+          env = {
+            NODE_NO_WARNINGS = "1",
+          },
         },
       },
     })

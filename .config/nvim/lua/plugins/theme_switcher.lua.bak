@@ -1,0 +1,11 @@
+return {
+  "ThisIsMani/theme-switcher",
+  config = function()
+    require("theme-switcher").setup({
+      onchange = function(theme)
+        print("Theme changed to " .. theme, vim.log.levels.INFO)
+      end,
+    })
+  end,
+  event = "VeryLazy",
+}

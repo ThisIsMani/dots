@@ -1,0 +1,10 @@
+return {
+  "avifenesh/claucode.nvim",
+  config = function()
+    require("claucode").setup({
+      -- bridge = {
+      --     show_diff = true
+      -- }
+    })
+  end,
+}

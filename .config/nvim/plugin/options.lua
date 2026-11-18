@@ -5,7 +5,7 @@ local options = {
   -- conceallevel = 3,                        -- so that `` is visible in markdown files
   -- fileencoding = "utf-8",                  -- the encoding written to a file
   foldmethod = "expr", -- folding, set to "expr" for treesitter based folding
-  foldexpr = "nvim_treesitter#foldexpr()", -- set to "nvim_treesitter#foldexpr()" for treesitter based folding
+  foldexpr = "v:lua.vim.treesitter.foldexpr()", -- set to "nvim_treesitter#foldexpr()" for treesitter based folding
   foldenable = false,
   foldlevel = 20,
 
@@ -46,6 +46,7 @@ local options = {
   -- showcmd = false,
   -- ruler = false,
   -- laststatus = 3,
+  winborder = "rounded",
 }
 
 for k, v in pairs(options) do

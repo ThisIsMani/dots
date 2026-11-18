@@ -1,33 +1,55 @@
 return {
   "olimorris/codecompanion.nvim",
+  -- tag = "v17.33.0",
   dependencies = {
     "nvim-lua/plenary.nvim",
     "nvim-treesitter/nvim-treesitter",
     "hrsh7th/nvim-cmp",
     "nvim-telescope/telescope.nvim",
+    "MeanderingProgrammer/render-markdown.nvim",
+    {
+      "echasnovski/mini.diff",
+      config = function()
+        local diff = require("mini.diff")
+        diff.setup({
+          -- Disabled by default
+          source = diff.gen_source.none(),
+        })
+      end,
+    },
   },
   config = function()
     require("codecompanion").setup({
       adapters = {
-        copilot = function()
-          return require("codecompanion.adapters").extend("copilot", {
-            schema = {
-              model = {
-                default = "gpt-4o-2024-05-13",
+        http = {
+          anthropic = function()
+            return require("codecompanion.adapters").extend("anthropic", {
+              url = "https://grid.ai.juspay.net/v1/messages",
+              env = {
+                api_key = "GRID_API_KEY",
               },
-            },
-          })
-        end,
+            })
+          end,
+        },
       },
       strategies = {
         chat = {
-          adapter = "copilot",
+          adapter = {
+            name = "anthropic",
+            model = "kimi-latest",
+          },
         },
         inline = {
-          adapter = "copilot",
+          adapter = {
+            name = "anthropic",
+            model = "kimi-latest",
+          },
         },
         agent = {
-          adapter = "copilot",
+          adapter = {
+            name = "anthropic",
+            model = "kimi-latest",
+          },
         },
       },
     })

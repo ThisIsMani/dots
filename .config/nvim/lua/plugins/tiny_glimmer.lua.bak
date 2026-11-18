@@ -1,0 +1,18 @@
+return {
+  "rachartier/tiny-glimmer.nvim",
+  event = "VeryLazy",
+  config = function()
+    require("tiny-glimmer").setup({
+      -- autoreload = true,
+
+      overwrite = {
+        search = {
+          enabled = true,
+          default_animation = "pulse",
+          next_mapping = "n",
+          prev_mapping = "N",
+        },
+      },
+    })
+  end,
+}

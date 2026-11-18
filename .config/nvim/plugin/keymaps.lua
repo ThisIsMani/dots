@@ -37,3 +37,5 @@ set("x", "il", "^og_", "Select line inner")
 set("o", "il", "<CMD>normal vil<CR>", "Select line inner")
 set("x", "al", "V", "Select line outer")
 set("o", "al", "<CMD>normal val<CR>", "Select line outer")
+
+set("n", "<Tab>", "za", "Toggle fold")

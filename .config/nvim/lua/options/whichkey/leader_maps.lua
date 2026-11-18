@@ -3,7 +3,7 @@ local utils = require("options.utils")
 
 local gitsigns = require("gitsigns")
 local diffview = require("diffview")
-local copilot_chat = require("CopilotChat")
+-- local copilot_chat = require("CopilotChat")
 local focus = require("focus")
 local oil = require("oil")
 local zen_mode = require("zen-mode")
@@ -12,6 +12,7 @@ local telescope_resession = require("telescope").extensions.resession
 local recession = require("resession")
 local trouble = require("trouble")
 local bufferline = require("bufferline")
+-- local opencode = require("opencode")
 -- local avante = require("avante")
 
 local wo = require("options.utils").with_opts
@@ -26,11 +27,11 @@ which_key.add({
   -- { "<leader>a", group = "Avante" },
   -- { "<leader>aa", wo(avante.toggle, {}), desc = "Open Avante Chat" },
 
-  { "<leader>c", group = "Copilot" },
-  { "<leader>cc", copilot_chat.toggle, desc = "Open chat", mode = "v" },
-  { "<leader>cm", copilot_chat.select_model, desc = "Select Copilot model" },
-  { "<leader>cs", copilot_chat.save, desc = "Save Copilot chat" },
-  { "<leader>cl", copilot_chat.load, desc = "Load Copilot chat" },
+  -- { "<leader>c", group = "Copilot" },
+  -- { "<leader>cc", copilot_chat.toggle, desc = "Open chat", mode = "v" },
+  -- { "<leader>cm", copilot_chat.select_model, desc = "Select Copilot model" },
+  -- { "<leader>cs", copilot_chat.save, desc = "Save Copilot chat" },
+  -- { "<leader>cl", copilot_chat.load, desc = "Load Copilot chat" },
 
   { "<leader>w", group = "Window" },
   { "<leader>wq", utils.smart_quit, desc = "Quit" },
@@ -48,6 +49,7 @@ which_key.add({
   { "<leader>nu", group = "Neovim utils" },
   { "<leader>nuy", utils.copy_path, desc = "Copy file path" },
   { "<leader>nup", utils.print_path, desc = "Print file path" },
+  { "<leader>nc", group = "Copy with context" },
 
   { "<leader>f", group = "File" },
   { "<leader>ff", telescope.find_files, desc = "Find file" },
@@ -93,6 +95,10 @@ which_key.add({
   { "<leader>lc", group = "Calls" },
   { "<leader>lco", telescope.lsp_outgoing_calls, desc = "Outgoing calls" },
   { "<leader>lci", telescope.lsp_incoming_calls, desc = "Incoming calls" },
+
+  -- { "<leader>o", group = "Opencode" },
+  -- { "<leader>oa", wo(opencode.ask, { "@this: ", { submit = true } }), desc = "Ask Opencode" },
+  -- { "<leader>ob", opencode.select, desc = "Execute Opencode action" },
 
   { "<leader>t", group = "Telescope" },
   { "<leader>ta", telescope.builtin, desc = "Search all options" },
