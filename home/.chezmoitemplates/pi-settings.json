@@ -1,5 +1,5 @@
 {
-  "defaultProvider": "xyne-box",
+  "defaultProvider": "openai",
   "defaultModel": "gpt-6.1-sol",
   "defaultThinkingLevel": "medium",
   "packages": [
@@ -16,9 +16,9 @@
     "npm:pi-notify",
     "npm:@diegopetrucci/pi-openai-fast",
     "npm:pi-intercom",
-    "npm:@luxusai/pi-hindsight",
     "npm:@quintinshaw/pi-dynamic-workflows",
-    "npm:pi-codex-accounts"
+    "npm:pi-codex-accounts",
+    "npm:pi-security-analysis"
   ],
   "steeringMode": "all",
   "subagents": {
